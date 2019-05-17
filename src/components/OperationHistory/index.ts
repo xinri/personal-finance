@@ -1,1 +1,1 @@
-export * from "./OperationHistoryComponent";
+export * from "./OperationHistory";

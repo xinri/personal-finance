@@ -1,11 +1,11 @@
 import React from "react";
-import { Operation } from "../../interfaces/Operation";
+import { Operation as IOperation } from "../../interfaces/Operation";
 
 interface Props {
-  operation: Operation;
+  operation: IOperation;
 }
 
-export const OperationComponent: React.StatelessComponent<Props> = ({ operation: { date, amount } }: Props) => {
+export const Operation: React.StatelessComponent<Props> = ({ operation: { date, amount } }: Props) => {
   const dateText: string = date.toDateString();
   const amountText: string = (amount >= 0 ? "+" : "") + amount.toString();
   return (

@@ -1,10 +1,10 @@
 import uuid from "uuid/v4";
 import React from "react";
 import ReactDOM from "react-dom";
-import { Operation } from "./interfaces/Operation";
-import { OperationHistoryComponent } from "./components/OperationHistory";
+import { Operation as IOperation } from "./interfaces/Operation";
+import { OperationHistory } from "./components/OperationHistory";
 
-const operationHistory: Operation[] = [
+const operationHistory: IOperation[] = [
   {
     id: uuid(),
     date: new Date(2019, 5, 12),
@@ -17,4 +17,4 @@ const operationHistory: Operation[] = [
   }
 ];
 
-ReactDOM.render(<OperationHistoryComponent operations={operationHistory} />, document.getElementById("root"));
+ReactDOM.render(<OperationHistory operations={operationHistory} />, document.getElementById("root"));
