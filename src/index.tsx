@@ -8,17 +8,12 @@ interface Operation {
 
 function OperationComponent({ date, amount }: Operation): React.ReactElement {
   const dateText: string = date.toDateString();
-  const separatorText: string = " | ";
   const amountText: string = (amount >= 0 ? "+" : "") + amount.toString();
-  const element: React.ReactElement = React.createElement(
-    "div",
-    {
-      className: "operation",
-      key: dateText + amountText
-    },
-    [dateText, separatorText, amountText]
+  return (
+    <div className="operation" key={dateText + amountText}>
+      {dateText} | {amountText}
+    </div>
   );
-  return element;
 }
 
 const operationHistory: Operation[] = [
@@ -32,6 +27,6 @@ const operationHistory: Operation[] = [
   }
 ];
 
-const rootElement: React.ReactElement = React.createElement("div", null, operationHistory.map(OperationComponent));
+const rootElement: React.ReactElement = <div>{operationHistory.map(OperationComponent)}</div>;
 
 ReactDOM.render(rootElement, document.getElementById("root"));
