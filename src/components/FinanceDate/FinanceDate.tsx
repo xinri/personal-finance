@@ -5,6 +5,8 @@ interface Props {
 }
 
 export const FinanceDate: React.StatelessComponent<Props> = ({ date }: Props) => {
-  const dateText: string = date.toDateString();
-  return <span className="date">{dateText}</span>;
+  const year: number = date.getFullYear();
+  const month: number = date.getMonth() + 1;
+  const day: number = date.getDate();
+  return <span className="date">{`${year}-${month}-${day}`}</span>;
 };
