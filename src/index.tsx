@@ -1,27 +1,24 @@
+import React from "react";
+import ReactDOM from "react-dom";
+
 interface Operation {
   date: Date;
   amount: number;
 }
 
-function OperationComponent({ date, amount }: Operation): HTMLElement {
-  const element: HTMLDivElement = document.createElement("div");
-  element.setAttribute("class", "operation");
-  const dateNode: Text = document.createTextNode(date.toDateString());
-  element.appendChild(dateNode);
-  const separatorNode: Text = document.createTextNode(" | ");
-  element.appendChild(separatorNode);
-  const amountNode: Text = document.createTextNode(
-    (amount >= 0 ? "+" : "") + amount.toString()
+function OperationComponent({ date, amount }: Operation): React.ReactElement {
+  const dateText: string = date.toDateString();
+  const separatorText: string = " | ";
+  const amountText: string = (amount >= 0 ? "+" : "") + amount.toString();
+  const element: React.ReactElement = React.createElement(
+    "div",
+    {
+      className: "operation",
+      key: dateText + amountText
+    },
+    [dateText, separatorText, amountText]
   );
-  element.appendChild(amountNode);
   return element;
-}
-
-function display(element: HTMLElement): void {
-  const rootElement: HTMLElement | null = document.getElementById("root");
-  if (rootElement !== null) {
-    rootElement.appendChild(element);
-  }
 }
 
 const operationHistory: Operation[] = [
@@ -35,6 +32,6 @@ const operationHistory: Operation[] = [
   }
 ];
 
-operationHistory.map(OperationComponent).forEach(display);
+const rootElement: React.ReactElement = React.createElement("div", null, operationHistory.map(OperationComponent));
 
-export const module = undefined;
+ReactDOM.render(rootElement, document.getElementById("root"));
