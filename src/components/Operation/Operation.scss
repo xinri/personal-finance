@@ -1,15 +1,2 @@
 .operation {
-  display: grid;
-  width: 300px;
-  height: 2em;
-  grid-template-columns: repeat(2, 1fr);
-  grid-column-gap: 1em;
-
-  .date-container {
-    grid-column: 1 / 2;
-  }
-
-  .amount-container {
-    grid-column: 2 / 3;
-  }
 }

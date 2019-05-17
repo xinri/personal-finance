@@ -2,7 +2,7 @@ import uuid from "uuid/v4";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Operation as IOperation } from "./interfaces/Operation";
-import { OperationHistory } from "./components/OperationHistory";
+import { Account } from "./components/Account";
 import "./index.css";
 
 const operationHistory: IOperation[] = [
@@ -23,4 +23,4 @@ const operationHistory: IOperation[] = [
   }
 ];
 
-ReactDOM.render(<OperationHistory operations={operationHistory} />, document.getElementById("root"));
+ReactDOM.render(<Account operations={operationHistory} />, document.getElementById("root"));
