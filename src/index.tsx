@@ -1,32 +1,20 @@
+import uuid from "uuid/v4";
 import React from "react";
 import ReactDOM from "react-dom";
-
-interface Operation {
-  date: Date;
-  amount: number;
-}
-
-function OperationComponent({ date, amount }: Operation): React.ReactElement {
-  const dateText: string = date.toDateString();
-  const amountText: string = (amount >= 0 ? "+" : "") + amount.toString();
-  return (
-    <div className="operation" key={dateText + amountText}>
-      {dateText} | {amountText}
-    </div>
-  );
-}
+import { Operation } from "./interfaces";
+import { OperationHistoryComponent } from "./OperationHistoryComponent";
 
 const operationHistory: Operation[] = [
   {
+    id: uuid(),
     date: new Date(2019, 5, 12),
     amount: 100
   },
   {
+    id: uuid(),
     date: new Date(2019, 5, 13),
     amount: -40
   }
 ];
 
-const rootElement: React.ReactElement = <div>{operationHistory.map(OperationComponent)}</div>;
-
-ReactDOM.render(rootElement, document.getElementById("root"));
+ReactDOM.render(<OperationHistoryComponent operations={operationHistory} />, document.getElementById("root"));
