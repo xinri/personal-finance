@@ -1,8 +1,8 @@
 import uuid from "uuid/v4";
 import React from "react";
 import ReactDOM from "react-dom";
-import { Operation } from "./interfaces";
-import { OperationHistoryComponent } from "./OperationHistoryComponent";
+import { Operation } from "./interfaces/Operation";
+import { OperationHistoryComponent } from "./components/OperationHistory";
 
 const operationHistory: Operation[] = [
   {

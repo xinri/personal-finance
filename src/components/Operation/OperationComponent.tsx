@@ -1,5 +1,5 @@
 import React from "react";
-import { Operation } from "./interfaces";
+import { Operation } from "../../interfaces/Operation";
 
 interface Props {
   operation: Operation;

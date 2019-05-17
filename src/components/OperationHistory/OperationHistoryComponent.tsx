@@ -1,6 +1,6 @@
 import React from "react";
-import { Operation } from "./interfaces";
-import { OperationComponent } from "./OperationComponent";
+import { Operation } from "../../interfaces/Operation";
+import { OperationComponent } from "../Operation";
 
 interface Props {
   operations: Operation[];
