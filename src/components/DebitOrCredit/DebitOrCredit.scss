@@ -1,0 +1,16 @@
+.debit-or-credit {
+  display: inline-grid;
+  width: 200px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 1em;
+
+  .credit {
+    grid-column: 1 / 2;
+    text-align: right;
+  }
+
+  .debit {
+    grid-column: 2 / 3;
+    text-align: right;
+  }
+}

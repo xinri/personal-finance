@@ -1,7 +1,8 @@
 import React from "react";
 import { Operation as IOperation } from "../../interfaces/Operation";
 import { FinanceDate } from "../FinanceDate";
-import { FinanceValue } from "../FinanceValue";
+import { DebitOrCredit } from "../DebitOrCredit";
+import "./Operation.scss";
 
 interface Props {
   operation: IOperation;
@@ -10,9 +11,12 @@ interface Props {
 export const Operation: React.StatelessComponent<Props> = ({ operation: { date, amount } }: Props) => {
   return (
     <div className="operation">
-      <FinanceDate date={date} />
-      {" | "}
-      <FinanceValue amount={amount} />
+      <div className="date-container">
+        <FinanceDate date={date} />
+      </div>
+      <div className="amount-container">
+        <DebitOrCredit amount={amount} />
+      </div>
     </div>
   );
 };
