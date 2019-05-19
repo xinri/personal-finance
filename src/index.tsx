@@ -1,8 +1,8 @@
-import uuid from "uuid/v4";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Operation as IOperation } from "./interfaces/Operation";
 import { Account } from "./components/Account";
+import uuid from "uuid/v4";
 import "./index.css";
 
 const operationHistory: IOperation[] = [
