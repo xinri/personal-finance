@@ -12,12 +12,21 @@ interface State {
 }
 
 export class AddOperation extends React.Component<Props, State> {
+  private inputRef: React.RefObject<HTMLInputElement>;
+
   constructor(props: Props) {
     super(props);
     this.state = {
       value: undefined
     };
+    this.inputRef = React.createRef();
   }
+
+  private onInputFocus = (): void => {
+    if (this.inputRef.current) {
+      this.inputRef.current.select();
+    }
+  };
 
   private setValue = (value: number | undefined): void => {
     this.setState({
@@ -52,8 +61,10 @@ export class AddOperation extends React.Component<Props, State> {
     return (
       <div className="add-operation">
         <input
+          ref={this.inputRef}
           className="input-amount"
           type="number"
+          onFocus={this.onInputFocus}
           onChange={this.onInputChange}
           data-e2e="account-new-operation-input-amount"
         />
