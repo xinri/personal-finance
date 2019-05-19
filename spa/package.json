@@ -1,5 +1,6 @@
 {
-  "name": "personal-finance",
+  "name": "spa",
+  "private": true,
   "version": "1.0.0",
   "description": "Let's build a personal finance application with increasing complexity!",
   "main": "index.js",

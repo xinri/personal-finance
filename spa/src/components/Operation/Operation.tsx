@@ -10,7 +10,7 @@ interface Props {
 
 export const Operation: React.StatelessComponent<Props> = ({ operation: { date, amount } }: Props) => {
   return (
-    <div className="operation">
+    <div className="operation" data-e2e="account-operation">
       <LabeledDebitOrCredit amount={amount} renderLabel={() => <FinanceDate date={date} />} />
     </div>
   );

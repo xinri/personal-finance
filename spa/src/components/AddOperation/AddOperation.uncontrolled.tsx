@@ -34,10 +34,16 @@ export class AddOperation extends React.Component<Props, State> {
   render() {
     return (
       <div className="add-operation">
-        <input ref={this.inputRef} className="input-amount" type="number" />
+        <input
+          ref={this.inputRef}
+          className="input-amount"
+          type="number"
+          data-e2e="account-new-operation-input-amount"
+        />
         <button
           onClick={this.onButtonClick}
           className="add-amount mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+          data-e2e="account-new-operation-add-amount"
         >
           Add
         </button>

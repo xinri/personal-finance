@@ -1,0 +1,37 @@
+{
+  "name": "e2e",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Let's build a personal finance application with increasing complexity!",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mathieueveillard/personal-finance.git"
+  },
+  "keywords": [
+    "personal",
+    "finance",
+    "bank",
+    "account",
+    "react",
+    "redux",
+    "application"
+  ],
+  "author": "Mathieu Eveillard",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/mathieueveillard/personal-finance/issues"
+  },
+  "homepage": "https://github.com/mathieueveillard/personal-finance#readme",
+  "devDependencies": {
+    "testcafe": "^1.1.4"
+  },
+  "dependencies": {},
+  "scripts": {
+    "test": "testcafe chrome features",
+    "format": "prettier --write '**/*.{ts,tsx}'"
+  },
+  "prettier": {
+    "printWidth": 120
+  }
+}
