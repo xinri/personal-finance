@@ -49,6 +49,7 @@ export class AddOperation extends React.Component<Props, State> {
   private onButtonClick = (): void => {
     const amount: number | undefined = this.state.value;
     if (amount !== undefined && amount !== 0) {
+      this.setValue(undefined);
       this.props.onNewOperation({
         id: uuid(),
         date: new Date(),
@@ -64,6 +65,7 @@ export class AddOperation extends React.Component<Props, State> {
           ref={this.inputRef}
           className="input-amount"
           type="number"
+          value={this.state.value || ""}
           onFocus={this.onInputFocus}
           onChange={this.onInputChange}
           data-e2e="account-new-operation-input-amount"

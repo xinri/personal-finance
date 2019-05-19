@@ -38,7 +38,7 @@ describe("<AddOperation />", () => {
     expect(onNewOperation).not.toHaveBeenCalled();
   });
 
-  it("should call onNewOperation when the user inputs a valid value and clicks the add button", () => {
+  it("should call onNewOperation when the user inputs a valid value and clicks the add button, then clear input value", () => {
     // GIVEN
     const result: any = {};
     const onNewOperation = jest.fn().mockImplementation(function setOperation({ amount }: Operation): void {
@@ -56,5 +56,6 @@ describe("<AddOperation />", () => {
     // THEN
     expect(onNewOperation).toHaveBeenCalledTimes(1);
     expect(result.amount).toEqual(100);
+    expect(input.getDOMNode().getAttribute("value")).toEqual("");
   });
 });

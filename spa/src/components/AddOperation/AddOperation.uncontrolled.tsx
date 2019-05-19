@@ -22,6 +22,7 @@ export class AddOperation extends React.Component<Props, State> {
       const value: string = this.inputRef.current.value;
       const amount: number = parseFloat(value);
       if (!isNaN(amount) && amount !== 0) {
+        this.inputRef.current.value = "";
         this.props.onNewOperation({
           id: uuid(),
           date: new Date(),
