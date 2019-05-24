@@ -7,8 +7,9 @@ const account = new Account();
 fixture("Account").page(setup.getAccountUrl());
 
 test("Should allow the user to add a new operation", async () => {
+  await account.expectBalanceToEqual(55);
   await account.expectNumberOfOperationsToEqual(3);
-  await account.inputAmount(100);
-  await account.addAmount();
+  await account.addOperation({ amount: 100 });
   await account.expectNumberOfOperationsToEqual(4);
+  await account.expectBalanceToEqual(155);
 });
