@@ -2,7 +2,7 @@ import React from "react";
 import { LabeledDebitOrCredit } from "../LabeledDebitOrCredit";
 import "./Balance.scss";
 
-interface Props {
+export interface Props {
   amount: number;
 }
 

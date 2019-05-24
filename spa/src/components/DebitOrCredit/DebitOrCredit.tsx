@@ -2,7 +2,7 @@ import React from "react";
 import { FinanceValue } from "../FinanceValue";
 import "./DebitOrCredit.scss";
 
-interface Props {
+export interface Props {
   amount: number;
 }
 

@@ -2,7 +2,7 @@ import React from "react";
 import { DebitOrCredit } from "../DebitOrCredit";
 import "./LabeledDebitOrCredit.scss";
 
-interface Props {
+export interface Props {
   amount: number;
   renderLabel(): React.ReactElement;
 }

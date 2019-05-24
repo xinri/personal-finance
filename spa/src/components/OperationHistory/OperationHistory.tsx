@@ -2,7 +2,7 @@ import React from "react";
 import { Operation as IOperation } from "../../interfaces/Operation";
 import { Operation } from "../Operation";
 
-interface Props {
+export interface Props {
   operations: IOperation[];
 }
 

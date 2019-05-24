@@ -4,7 +4,7 @@ import { OperationHistory } from "../OperationHistory";
 import { Balance } from "../Balance";
 import { AddOperation } from "../AddOperation";
 
-interface Props {
+export interface Props {
   operations: IOperation[];
 }
 

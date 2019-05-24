@@ -3,7 +3,7 @@ import { Operation as IOperation } from "../../interfaces/Operation";
 import uuid from "uuid/v4";
 import "./AddOperation.scss";
 
-interface Props {
+export interface Props {
   onNewOperation(operation: IOperation): void;
 }
 

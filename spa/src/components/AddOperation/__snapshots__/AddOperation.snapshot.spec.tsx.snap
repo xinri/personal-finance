@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="add-operation"
+>
+  <input
+    className="input-amount"
+    data-e2e="account-new-operation-input-amount"
+    onChange={[Function]}
+    onFocus={[Function]}
+    type="number"
+    value=""
+  />
+  <button
+    className="add-amount mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+    data-e2e="account-new-operation-add-amount"
+    onClick={[Function]}
+  >
+    Add
+  </button>
+</div>
+`;

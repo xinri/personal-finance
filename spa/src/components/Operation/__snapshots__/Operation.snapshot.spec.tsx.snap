@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="operation"
+  data-e2e="account-operation"
+>
+  <div
+    className="labeled-debit-or-credit"
+  >
+    <div
+      className="label-container"
+    >
+      <span
+        className="date"
+      >
+        2019-5-24
+      </span>
+    </div>
+    <div
+      className="amount-container"
+    >
+      <div
+        className="debit-or-credit"
+      >
+        <span
+          className="credit"
+        >
+          <span
+            className="value"
+          >
+            +10
+          </span>
+        </span>
+        <span
+          className="debit"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -4,7 +4,7 @@ import { FinanceDate } from "../FinanceDate";
 import { LabeledDebitOrCredit } from "../LabeledDebitOrCredit";
 import "./Operation.scss";
 
-interface Props {
+export interface Props {
   operation: IOperation;
 }
 
