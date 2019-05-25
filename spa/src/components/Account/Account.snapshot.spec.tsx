@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import { Account, Props } from "./Account";
+import { AccountComponent, Props } from "./Account";
 
 it("renders correctly", () => {
   const props: Props = {
@@ -17,6 +17,6 @@ it("renders correctly", () => {
       }
     ]
   };
-  const tree = renderer.create(<Account {...props} />).toJSON();
+  const tree = renderer.create(<AccountComponent {...props} />).toJSON();
   expect(tree).toMatchSnapshot();
 });

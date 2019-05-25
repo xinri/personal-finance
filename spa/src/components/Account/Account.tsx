@@ -4,13 +4,19 @@ import { OperationHistory } from "../OperationHistory";
 import { Balance } from "../Balance";
 import { AddOperation } from "../AddOperation";
 
-export interface Props {
+export interface OwnProps {}
+
+export interface StateProps {
   operations: IOperation[];
 }
 
-type State = Props;
+type Props = OwnProps & StateProps;
 
-export class Account extends React.Component<Props, State> {
+interface State {
+  operations: IOperation[];
+}
+
+export class AccountComponent extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
