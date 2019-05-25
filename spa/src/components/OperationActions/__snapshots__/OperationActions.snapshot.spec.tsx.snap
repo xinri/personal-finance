@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="actions"
+>
+  <button
+    className="delete mdl-button mdl-js-button mdl-button--icon"
+    data-e2e="account-operation-delete"
+    onClick={[Function]}
+  >
+    <i
+      className="material-icons"
+    >
+      delete
+    </i>
+  </button>
+</div>
+`;

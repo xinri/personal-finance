@@ -1,8 +1,14 @@
 import { t } from "testcafe";
 import { e2eSelector } from "../util/selector";
 import { NEW_OPERATION_INPUT_AMOUNT, NEW_OPERATION_ADD_AMOUNT, BALANCE, OPERATION } from "./selectors";
+import { Count } from "../util/count";
+import { Operation } from "./Operation";
 
 export class Account {
+  public onOperation(count: Count): Operation {
+    return new Operation(count);
+  }
+
   public async addOperation({ amount }: { amount: number }): Promise<void> {
     await this.inputAmount(amount);
     await this.addAmount();

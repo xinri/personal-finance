@@ -1,2 +1,23 @@
 .operation {
+  position: relative;
+
+  .actions-container {
+    position: absolute;
+    box-sizing: border-box;
+    width: 100px;
+    height: 100%;
+    padding: 0 20px;
+    top: -5px;
+    right: -100px;
+
+    .actions-content {
+      display: none;
+    }
+  }
+
+  &:hover {
+    .actions-content {
+      display: block;
+    }
+  }
 }

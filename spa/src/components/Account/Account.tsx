@@ -25,12 +25,24 @@ export class Account extends React.Component<Props, State> {
     });
   };
 
+  private onOperationDeletion = (id: string): void => {
+    const operations: IOperation[] = [...this.state.operations];
+    const index: number = operations.findIndex(({ id: currentId }: IOperation) => currentId === id);
+    if (index !== -1) {
+      operations.splice(index, 1);
+      this.setState({
+        ...this.state,
+        operations
+      });
+    }
+  };
+
   render() {
     const balance: number = this.state.operations.map(extractAmount).reduce(sum, 0);
     return (
       <div>
         <AddOperation onNewOperation={this.onNewOperation} />
-        <OperationHistory operations={this.state.operations} />
+        <OperationHistory operations={this.state.operations} onDelete={this.onOperationDeletion} />
         <Balance amount={balance} />
       </div>
     );
