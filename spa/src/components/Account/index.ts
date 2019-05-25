@@ -1,1 +1,1 @@
-export * from "./Account.connected";
+export * from "./Account";

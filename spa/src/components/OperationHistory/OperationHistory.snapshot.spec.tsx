@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import { OperationHistory, Props } from "./OperationHistory";
+import { OperationHistoryComponent, Props } from "./OperationHistory";
 
 it("renders correctly", () => {
   const props: Props = {
@@ -17,6 +17,6 @@ it("renders correctly", () => {
       }
     ]
   };
-  const tree = renderer.create(<OperationHistory {...props} />).toJSON();
+  const tree = renderer.create(<OperationHistoryComponent {...props} />).toJSON();
   expect(tree).toMatchSnapshot();
 });

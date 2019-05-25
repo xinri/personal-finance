@@ -2,16 +2,19 @@ import React from "react";
 import { Operation as IOperation } from "../../interfaces/Operation";
 import { Operation } from "../Operation";
 
-export interface Props {
+export interface OwnProps {}
+
+export interface StateProps {
   operations: IOperation[];
-  onDelete(id: string): void;
 }
 
-export const OperationHistory: React.StatelessComponent<Props> = ({ operations, onDelete }: Props) => {
+export type Props = OwnProps & StateProps;
+
+export const OperationHistoryComponent: React.StatelessComponent<Props> = ({ operations }: Props) => {
   return (
     <div>
       {operations.map((operation: IOperation) => (
-        <Operation key={operation.id} operation={operation} onDelete={onDelete} />
+        <Operation key={operation.id} id={operation.id} />
       ))}
     </div>
   );

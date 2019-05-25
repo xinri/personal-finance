@@ -7,7 +7,7 @@ exports[`renders correctly 1`] = `
   <button
     className="delete mdl-button mdl-js-button mdl-button--icon"
     data-e2e="account-operation-delete"
-    onClick={[Function]}
+    onClick={[MockFunction]}
   >
     <i
       className="material-icons"

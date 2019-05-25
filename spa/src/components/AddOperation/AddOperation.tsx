@@ -3,15 +3,19 @@ import { Operation as IOperation } from "../../interfaces/Operation";
 import uuid from "uuid/v4";
 import "./AddOperation.scss";
 
-export interface Props {
+export interface OwnProps {}
+
+export interface DispatchProps {
   onNewOperation(operation: IOperation): void;
 }
+
+type Props = OwnProps & DispatchProps;
 
 interface State {
   value: number | undefined;
 }
 
-export class AddOperation extends React.Component<Props, State> {
+export class AddOperationComponent extends React.Component<Props, State> {
   private inputRef: React.RefObject<HTMLInputElement>;
 
   constructor(props: Props) {

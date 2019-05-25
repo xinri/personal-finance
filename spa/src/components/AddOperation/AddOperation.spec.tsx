@@ -1,6 +1,6 @@
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
-import { AddOperation } from "./AddOperation";
+import { AddOperationComponent } from "./AddOperation";
 // import { AddOperation } from "./AddOperation.uncontrolled";
 import { Operation } from "../../interfaces/Operation";
 
@@ -8,7 +8,7 @@ describe("<AddOperation />", () => {
   it("should not call onNewOperation when the user inputs 0 and clicks the add button", () => {
     // GIVEN
     const onNewOperation = jest.fn();
-    const element = <AddOperation onNewOperation={onNewOperation} />;
+    const element = <AddOperationComponent onNewOperation={onNewOperation} />;
     const wrapper: ReactWrapper = mount(element);
     const input: ReactWrapper = wrapper.find(".input-amount");
     const button: ReactWrapper = wrapper.find(".add-amount");
@@ -24,7 +24,7 @@ describe("<AddOperation />", () => {
   it("should not call onNewOperation when the user resets the input and clicks the add button", () => {
     // GIVEN
     const onNewOperation = jest.fn();
-    const element = <AddOperation onNewOperation={onNewOperation} />;
+    const element = <AddOperationComponent onNewOperation={onNewOperation} />;
     const wrapper: ReactWrapper = mount(element);
     const input: ReactWrapper = wrapper.find(".input-amount");
     const button: ReactWrapper = wrapper.find(".add-amount");
@@ -44,7 +44,7 @@ describe("<AddOperation />", () => {
     const onNewOperation = jest.fn().mockImplementation(function setOperation({ amount }: Operation): void {
       result["amount"] = amount;
     });
-    const element = <AddOperation onNewOperation={onNewOperation} />;
+    const element = <AddOperationComponent onNewOperation={onNewOperation} />;
     const wrapper: ReactWrapper = mount(element);
     const input: ReactWrapper = wrapper.find(".input-amount");
     const button: ReactWrapper = wrapper.find(".add-amount");
