@@ -13,11 +13,11 @@ export interface StateProps {
   operation: IOperation;
 }
 
-export interface DispatchProps {
+export interface UpdateProps {
   onDelete(): void;
 }
 
-export type Props = OwnProps & StateProps & DispatchProps;
+export type Props = OwnProps & StateProps & UpdateProps;
 
 export const OperationComponent: React.StatelessComponent<Props> = ({
   operation: { id, date, amount },

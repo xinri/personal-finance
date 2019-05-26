@@ -5,11 +5,11 @@ import "./AddOperation.scss";
 
 export interface OwnProps {}
 
-export interface DispatchProps {
+export interface UpdateProps {
   onNewOperation(operation: IOperation): void;
 }
 
-type Props = OwnProps & DispatchProps;
+type Props = OwnProps & UpdateProps;
 
 interface State {
   value: number | undefined;
