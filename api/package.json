@@ -1,0 +1,32 @@
+{
+  "name": "api",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Fake API",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mathieueveillard/personal-finance.git"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "format": "prettier --write 'src/**/*.{ts,tsx}'"
+  },
+  "author": "Mathieu Eveillard",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/mathieueveillard/personal-finance/issues"
+  },
+  "homepage": "https://github.com/mathieueveillard/personal-finance#readme",
+  "devDependencies": {
+    "prettier": "^1.17.1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "uuid": "^3.3.2"
+  },
+  "prettier": {
+    "printWidth": 120
+  }
+}
