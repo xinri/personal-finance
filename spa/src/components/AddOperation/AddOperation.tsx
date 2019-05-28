@@ -2,6 +2,7 @@ import React from "react";
 import { Operation as IOperation } from "../../interfaces/Operation";
 import uuid from "uuid/v4";
 import "./AddOperation.scss";
+import { addOperation } from "./api";
 
 export interface OwnProps {}
 
@@ -53,11 +54,14 @@ export class AddOperationComponent extends React.Component<Props, State> {
   private onButtonClick = (): void => {
     const amount: number | undefined = this.state.value;
     if (amount !== undefined && amount !== 0) {
-      this.setValue(undefined);
-      this.props.onNewOperation({
+      const operation: IOperation = {
         id: uuid(),
         date: new Date(),
         amount
+      };
+      addOperation().then(() => {
+        this.props.onNewOperation(operation);
+        this.setValue(undefined);
       });
     }
   };

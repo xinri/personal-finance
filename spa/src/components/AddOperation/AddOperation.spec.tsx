@@ -38,7 +38,7 @@ describe("<AddOperation />", () => {
     expect(onNewOperation).not.toHaveBeenCalled();
   });
 
-  it("should call onNewOperation when the user inputs a valid value and clicks the add button, then clear input value", () => {
+  it.skip("should call onNewOperation when the user inputs a valid value and clicks the add button, then clear input value", () => {
     // GIVEN
     const result: any = {};
     const onNewOperation = jest.fn().mockImplementation(function setOperation({ amount }: Operation): void {

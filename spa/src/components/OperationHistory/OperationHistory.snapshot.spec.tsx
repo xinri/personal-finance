@@ -15,7 +15,8 @@ it("renders correctly", () => {
         date: new Date(2019, 4, 25),
         amount: -5
       }
-    ]
+    ],
+    onOperationsFetched: jest.fn()
   };
   const tree = renderer.create(<OperationHistoryComponent {...props} />).toJSON();
   expect(tree).toMatchSnapshot();

@@ -5,6 +5,10 @@ const uuid = require("uuid/v4");
 
 app.use("/", cors());
 
+app.post("/operation", function(_, res) {
+  res.sendStatus(200);
+});
+
 app.get("/operations", function(_, res) {
   const operations = [
     {
