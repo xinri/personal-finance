@@ -1,36 +1,27 @@
-import { State, Updater, connect } from "../../store";
-import { OperationComponent, OwnProps, StateProps, UpdateProps } from "./Operation";
-import { Operation as IOperation } from "../../interfaces/Operation";
+import { OperationComponent, OwnProps, StateProps, DispatchProps } from "./Operation";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { ApplicationState } from "../../business/state";
+import { Operation as IOperation } from "../../business/operation";
+import { OperationState } from "../../business/operation/state";
+import { applicationSelectors } from "../../business/selectors";
+import { ApplicationAction, applicationActionCreators } from "../../business/actions";
 
-function computeStateProps({ operations }: State, { id }: OwnProps): StateProps {
-  const index: number = operations.findIndex(({ id: currentId }: IOperation) => currentId === id);
-  if (index === -1) {
-    throw new Error(`No operation matches the following id: ${id}`);
-  }
-  const operation: IOperation = operations[index];
+function mapStateToProps(state: ApplicationState, { id }: OwnProps): StateProps {
+  const operationState: OperationState = state.operation;
+  const operation: IOperation = applicationSelectors.operation.getOperation(operationState, id);
   return { operation };
 }
 
-function computeUpdateProps(updateState: (updater: Updater) => void, { id }: OwnProps): UpdateProps {
+function mapDispatchToProps(dispatch: Dispatch, { id }: OwnProps): DispatchProps {
   const onDelete = () => {
-    const updater: Updater = (state: State) => {
-      const operations: IOperation[] = [...state.operations];
-      const index: number = operations.findIndex(({ id: currentId }: IOperation) => currentId === id);
-      if (index === -1) {
-        return state;
-      }
-      operations.splice(index, 1);
-      return {
-        ...state,
-        operations
-      };
-    };
-    updateState(updater);
+    const action: ApplicationAction = applicationActionCreators.operation.createOperationDeletedAction(id);
+    dispatch(action);
   };
   return { onDelete };
 }
 
-export const Operation = connect<OwnProps, StateProps, UpdateProps>(
-  OperationComponent,
-  { computeStateProps, computeUpdateProps }
-);
+export const Operation = connect<StateProps, DispatchProps, OwnProps, ApplicationState>(
+  mapStateToProps,
+  mapDispatchToProps
+)(OperationComponent);

@@ -1,25 +1,27 @@
-import { connect, State, Updater } from "../../store";
-import { OperationHistoryComponent, StateProps, OwnProps, UpdateProps } from "./OperationHistory";
-import { Operation as IOperation } from "../../interfaces/Operation";
+import { OperationHistoryComponent, OwnProps, StateProps, DispatchProps } from "./OperationHistory";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { ApplicationState } from "../../business/state";
+import { Operation } from "../../business/operation";
+import { applicationSelectors } from "../../business/selectors";
+import { OperationState } from "../../business/operation/state";
+import { ApplicationAction, applicationActionCreators } from "../../business/actions";
 
-function computeStateProps({ operations }: State): StateProps {
+function mapStateToProps(state: ApplicationState): StateProps {
+  const operationState: OperationState = state.operation;
+  const operations: Operation[] = applicationSelectors.operation.getAllOperations(operationState);
   return { operations };
 }
 
-function computeUpdateProps(updateState: (updater: Updater) => void): UpdateProps {
-  const onOperationsFetched = (operations: IOperation[]) => {
-    const updater: Updater = (state: State) => {
-      return {
-        ...state,
-        operations
-      };
-    };
-    updateState(updater);
+function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
+  const onOperationsFetched = (operations: Operation[]) => {
+    const action: ApplicationAction = applicationActionCreators.operation.createOperationsFetchedAction(operations);
+    dispatch(action);
   };
   return { onOperationsFetched };
 }
 
-export const OperationHistory = connect<OwnProps, StateProps, UpdateProps>(
-  OperationHistoryComponent,
-  { computeStateProps, computeUpdateProps }
-);
+export const OperationHistory = connect<StateProps, DispatchProps, OwnProps, ApplicationState>(
+  mapStateToProps,
+  mapDispatchToProps
+)(OperationHistoryComponent);

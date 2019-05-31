@@ -1,5 +1,5 @@
 import React from "react";
-import { Operation as IOperation } from "../../interfaces/Operation";
+import { Operation as IOperation } from "../../business/operation/model";
 import { FinanceDate } from "../FinanceDate";
 import { LabeledDebitOrCredit } from "../LabeledDebitOrCredit";
 import { OperationActions } from "../OperationActions/OperationActions";
@@ -15,11 +15,11 @@ export interface StateProps {
   operation: IOperation;
 }
 
-export interface UpdateProps {
+export interface DispatchProps {
   onDelete(): void;
 }
 
-export type Props = OwnProps & StateProps & UpdateProps;
+export type Props = OwnProps & StateProps & DispatchProps;
 
 export class OperationComponent extends React.Component<Props, {}> {
   private onDelete = (): void => {

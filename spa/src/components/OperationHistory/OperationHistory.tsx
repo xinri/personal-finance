@@ -1,5 +1,5 @@
 import React from "react";
-import { Operation as IOperation } from "../../interfaces/Operation";
+import { Operation as IOperation } from "../../business/operation/model";
 import { Operation } from "../Operation";
 import { getOperations } from "./api";
 
@@ -9,11 +9,11 @@ export interface StateProps {
   operations: IOperation[];
 }
 
-export interface UpdateProps {
+export interface DispatchProps {
   onOperationsFetched(operations: IOperation[]): void;
 }
 
-export type Props = OwnProps & StateProps & UpdateProps;
+export type Props = OwnProps & StateProps & DispatchProps;
 
 export class OperationHistoryComponent extends React.Component<Props, {}> {
   public componentDidMount = (): void => {

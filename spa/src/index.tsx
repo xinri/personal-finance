@@ -1,15 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Store, StoreProvider } from "./store";
 import { Account } from "./components/Account";
+import { createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import { Provider } from "react-redux";
+import { rootReducer } from "./business/reducer";
 import "./index.css";
 
-const store = new Store([]);
+const store = createStore(rootReducer, composeWithDevTools());
 
 const Application: React.ReactElement = (
-  <StoreProvider store={store}>
+  <Provider store={store}>
     <Account />
-  </StoreProvider>
+  </Provider>
 );
 
 ReactDOM.render(Application, document.getElementById("root"));

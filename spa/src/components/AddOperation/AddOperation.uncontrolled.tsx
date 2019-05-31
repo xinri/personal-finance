@@ -1,5 +1,5 @@
 import React from "react";
-import { Operation as IOperation } from "../../interfaces/Operation";
+import { Operation as IOperation } from "../../business/operation/model";
 import uuid from "uuid/v4";
 import "./AddOperation.scss";
 

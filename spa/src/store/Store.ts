@@ -1,4 +1,4 @@
-import { Operation as IOperation } from "../interfaces/Operation";
+import { Operation as IOperation } from "../business/operation/model";
 
 export interface State {
   operations: IOperation[];

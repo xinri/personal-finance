@@ -1,21 +1,16 @@
-import { connect, State } from "../../store";
 import { BalanceComponent, StateProps } from "./Balance";
-import { Operation } from "../../interfaces/Operation";
+import { connect } from "react-redux";
+import { ApplicationState } from "../../business/state";
+import { OperationState } from "../../business/operation/state";
+import { applicationSelectors } from "../../business/selectors";
 
-function computeStateProps(state: State): StateProps {
-  const balance: number = state.operations.map(extractAmount).reduce(sum, 0);
+function mapStateToProps(state: ApplicationState): StateProps {
+  const operationState: OperationState = state.operation;
+  const balance: number = applicationSelectors.operation.computeBalance(operationState);
   return { amount: balance };
 }
 
-function extractAmount({ amount }: Operation): number {
-  return amount;
-}
-
-function sum(accumulated: number, current: number): number {
-  return accumulated + current;
-}
-
-export const Balance = connect<{}, StateProps, {}>(
-  BalanceComponent,
-  { computeStateProps }
-);
+export const Balance = connect<StateProps, undefined, {}, ApplicationState>(
+  mapStateToProps,
+  undefined
+)(BalanceComponent);

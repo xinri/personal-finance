@@ -1,16 +1,16 @@
 import React from "react";
-import { Operation as IOperation } from "../../interfaces/Operation";
+import { Operation as IOperation } from "../../business/operation/model";
+import { addOperation } from "./api";
 import uuid from "uuid/v4";
 import "./AddOperation.scss";
-import { addOperation } from "./api";
 
 export interface OwnProps {}
 
-export interface UpdateProps {
+export interface DispatchProps {
   onNewOperation(operation: IOperation): void;
 }
 
-type Props = OwnProps & UpdateProps;
+type Props = OwnProps & DispatchProps;
 
 interface State {
   value: number | undefined;
