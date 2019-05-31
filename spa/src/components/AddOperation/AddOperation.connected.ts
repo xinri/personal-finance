@@ -7,7 +7,11 @@ import { applicationActionCreators, ApplicationAction } from "../../business/act
 
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   const onNewOperation = (operation: Operation) => {
-    const action: ApplicationAction = applicationActionCreators.operation.createOperationAddedAction(operation);
+    const action: ApplicationAction = applicationActionCreators.operation.createInsertAction(
+      operation.id,
+      operation,
+      "ADD_OPERATION"
+    );
     dispatch(action);
   };
   return { onNewOperation };

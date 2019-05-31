@@ -7,21 +7,22 @@ export const operationSelectors = {
   computeBalance
 };
 
-function getAllOperations({ operations }: OperationState): Operation[] {
-  return operations;
+function getAllOperations(state: OperationState): Operation[] {
+  return Object.keys(state).map((key: string) => state[key]);
 }
 
-function getOperation({ operations }: OperationState, id: string): Operation {
-  const index: number = operations.findIndex(({ id: currentId }: Operation) => currentId === id);
-  if (index === -1) {
+function getOperation(state: OperationState, id: string): Operation {
+  const operation: Operation | undefined = state[id];
+  if (operation === undefined) {
     throw new Error(`No operation matches the following id: ${id}`);
   }
-  const operation: Operation = operations[index];
   return operation;
 }
 
-function computeBalance({ operations }: OperationState): number {
-  return operations.map(extractAmount).reduce(sum, 0);
+function computeBalance(state: OperationState): number {
+  return getAllOperations(state)
+    .map(extractAmount)
+    .reduce(sum, 0);
 }
 
 function extractAmount({ amount }: Operation): number {

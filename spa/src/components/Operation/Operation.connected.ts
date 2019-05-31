@@ -15,7 +15,7 @@ function mapStateToProps(state: ApplicationState, { id }: OwnProps): StateProps 
 
 function mapDispatchToProps(dispatch: Dispatch, { id }: OwnProps): DispatchProps {
   const onDelete = () => {
-    const action: ApplicationAction = applicationActionCreators.operation.createOperationDeletedAction(id);
+    const action: ApplicationAction = applicationActionCreators.operation.createDeleteAction(id, "DELETE_OPERATION");
     dispatch(action);
   };
   return { onDelete };

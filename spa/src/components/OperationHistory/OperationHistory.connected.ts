@@ -15,8 +15,14 @@ function mapStateToProps(state: ApplicationState): StateProps {
 
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   const onOperationsFetched = (operations: Operation[]) => {
-    const action: ApplicationAction = applicationActionCreators.operation.createOperationsFetchedAction(operations);
-    dispatch(action);
+    operations.map((operation: Operation) => {
+      const action: ApplicationAction = applicationActionCreators.operation.createInsertAction(
+        operation.id,
+        operation,
+        "ADD_FETCHED_OPERATION"
+      );
+      dispatch(action);
+    });
   };
   return { onOperationsFetched };
 }

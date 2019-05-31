@@ -1,9 +1,4 @@
 import { Operation } from "./model";
+import { GenericState } from "redux-generic";
 
-export interface OperationState {
-  operations: Operation[];
-}
-
-export const defaultState: OperationState = {
-  operations: []
-};
+export type OperationState = GenericState<Operation>;

@@ -9,7 +9,9 @@ describe("Test of getOperation selector", () => {
   it("should return the operation corresponding to the id", () => {
     // GIVEN
     const operationState: OperationState = {
-      operations: [operation0, operation1, operation2]
+      [operation0.id]: operation0,
+      [operation1.id]: operation1,
+      [operation2.id]: operation2
     };
     const operationId: string = operation1.id;
 
@@ -24,7 +26,9 @@ describe("Test of getOperation selector", () => {
   it("should throw an exception in case no operation exists that corresponds to the given id", () => {
     // GIVEN
     const operationState: OperationState = {
-      operations: [operation0, operation1, operation2]
+      [operation0.id]: operation0,
+      [operation1.id]: operation1,
+      [operation2.id]: operation2
     };
     const operationId: string = "Another id";
 
@@ -39,7 +43,9 @@ describe("Test of computeBalance selector", () => {
   it("should add amounts of all operations", () => {
     // GIVEN
     const operationState: OperationState = {
-      operations: [operation0, operation1, operation2]
+      [operation0.id]: operation0,
+      [operation1.id]: operation1,
+      [operation2.id]: operation2
     };
 
     // WHEN
