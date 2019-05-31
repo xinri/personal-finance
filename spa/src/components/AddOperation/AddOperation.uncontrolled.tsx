@@ -1,10 +1,10 @@
 import React from "react";
-import { Operation as IOperation } from "../../business/operation/model";
+import { Operation } from "../../business/operation/model";
 import uuid from "uuid/v4";
 import "./AddOperation.scss";
 
 interface Props {
-  onNewOperation(operation: IOperation): void;
+  onNewOperation(operation: Operation): void;
 }
 
 interface State {}

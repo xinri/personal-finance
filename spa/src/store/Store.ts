@@ -1,7 +1,7 @@
-import { Operation as IOperation } from "../business/operation/model";
+import { Operation } from "../business/operation/model";
 
 export interface State {
-  operations: IOperation[];
+  operations: Operation[];
 }
 
 export interface Updater {
@@ -16,7 +16,7 @@ export class Store {
   private state: State;
   private subscriber: Subscriber | undefined = undefined;
 
-  constructor(operations: IOperation[]) {
+  constructor(operations: Operation[]) {
     this.state = {
       operations
     };

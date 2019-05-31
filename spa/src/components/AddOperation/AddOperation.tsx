@@ -1,5 +1,5 @@
 import React from "react";
-import { Operation as IOperation } from "../../business/operation/model";
+import { Operation } from "../../business/operation/model";
 import { addOperation } from "./api";
 import uuid from "uuid/v4";
 import "./AddOperation.scss";
@@ -7,7 +7,7 @@ import "./AddOperation.scss";
 export interface OwnProps {}
 
 export interface DispatchProps {
-  onNewOperation(operation: IOperation): void;
+  onNewOperation(operation: Operation): void;
 }
 
 type Props = OwnProps & DispatchProps;
@@ -54,7 +54,7 @@ export class AddOperationComponent extends React.Component<Props, State> {
   private onButtonClick = (): void => {
     const amount: number | undefined = this.state.value;
     if (amount !== undefined && amount !== 0) {
-      const operation: IOperation = {
+      const operation: Operation = {
         id: uuid(),
         date: new Date(),
         amount
