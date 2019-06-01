@@ -1,12 +1,11 @@
 import { OperationHistoryComponent, OwnProps, StateProps, DispatchProps } from "./OperationHistory";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import { ExtendedDispatch } from "../../business/definitions";
 import { ApplicationState } from "../../business/state";
 import { Operation } from "../../business/operation";
 import { applicationSelectors } from "../../business/selectors";
 import { OperationState } from "../../business/operation/state";
-import { ApplicationAction, applicationActionCreators } from "../../business/actions";
-import { batchActions, BatchAction } from "redux-batched-actions";
+import { applicationThunksCreators } from "../../business/thunks";
 
 function mapStateToProps(state: ApplicationState): StateProps {
   const operationState: OperationState = state.operation;
@@ -14,13 +13,10 @@ function mapStateToProps(state: ApplicationState): StateProps {
   return { operations };
 }
 
-function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
+function mapDispatchToProps(dispatch: ExtendedDispatch): DispatchProps {
   const onOperationsFetched = (operations: Operation[]) => {
-    const actions: ApplicationAction[] = operations.map((operation: Operation) => {
-      return applicationActionCreators.operation.createInsertAction(operation.id, operation, "ADD_FETCHED_OPERATION");
-    });
-    const batchedAction: BatchAction = batchActions(actions, "ADD_FETCHED_OPERATIONS");
-    dispatch(batchedAction);
+    const thunk = applicationThunksCreators.createOperationsFetchedThunk(operations);
+    dispatch(thunk);
   };
   return { onOperationsFetched };
 }
