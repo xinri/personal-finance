@@ -3,9 +3,7 @@ import { Operation as IOperation } from "../../business/operation/model";
 import { FinanceDate } from "../FinanceDate";
 import { LabeledDebitOrCredit } from "../LabeledDebitOrCredit";
 import { OperationActions } from "../OperationActions/OperationActions";
-import { _delete } from "../../util/xhr";
 import "./Operation.scss";
-import { deleteOperation } from "./api";
 
 export interface OwnProps {
   id: string;
@@ -16,27 +14,21 @@ export interface StateProps {
 }
 
 export interface DispatchProps {
-  onDelete(): void;
+  requestDeleteOperation(): void;
 }
 
 export type Props = OwnProps & StateProps & DispatchProps;
 
-export class OperationComponent extends React.Component<Props, {}> {
-  private onDelete = (): void => {
-    deleteOperation(this.props.id).then(this.props.onDelete);
-  };
-
-  public render() {
-    const { date, amount } = this.props.operation;
-    return (
-      <div className="operation" data-e2e="account-operation">
-        <LabeledDebitOrCredit amount={amount} renderLabel={() => <FinanceDate date={date} />} />
-        <div className="actions-container">
-          <div className="actions-content">
-            <OperationActions onDelete={this.onDelete} />
-          </div>
-        </div>
+export const OperationComponent: React.StatelessComponent<Props> = ({
+  operation: { date, amount },
+  requestDeleteOperation
+}) => (
+  <div className="operation" data-e2e="account-operation">
+    <LabeledDebitOrCredit amount={amount} renderLabel={() => <FinanceDate date={date} />} />
+    <div className="actions-container">
+      <div className="actions-content">
+        <OperationActions onDelete={requestDeleteOperation} />
       </div>
-    );
-  }
-}
+    </div>
+  </div>
+);

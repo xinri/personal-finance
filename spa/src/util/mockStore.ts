@@ -1,10 +1,16 @@
 import thunk from "redux-thunk";
-import configureStore from "redux-mock-store";
+import configureStore, { MockStoreEnhanced } from "redux-mock-store";
 import { ApplicationState } from "../business/state";
-import { ExtendedDispatch } from "../business/definitions";
+import { ExtendedDispatch, ExtraArgument } from "../business/definitions";
+import { RecursivePartial } from "./recursivePartial";
 
-const middlewares = [thunk];
-export const mockStore = configureStore<ApplicationState, ExtendedDispatch>(middlewares);
+export function mockStore(
+  extraArgument: RecursivePartial<ExtraArgument>,
+  initialState: ApplicationState
+): MockStoreEnhanced<ApplicationState, ExtendedDispatch> {
+  const middlewares = [thunk.withExtraArgument(extraArgument)];
+  return configureStore<ApplicationState, ExtendedDispatch>(middlewares)(initialState);
+}
 
 export function mockState<S>(): S {
   return new Proxy(

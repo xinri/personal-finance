@@ -14,11 +14,11 @@ function mapStateToProps(state: ApplicationState): StateProps {
 }
 
 function mapDispatchToProps(dispatch: ExtendedDispatch): DispatchProps {
-  const onOperationsFetched = (operations: Operation[]) => {
-    const thunk = applicationThunksCreators.createOperationsFetchedThunk(operations);
+  const requestOperationsFetching = () => {
+    const thunk = applicationThunksCreators.createOperationsFetchingRequestedThunk();
     dispatch(thunk);
   };
-  return { onOperationsFetched };
+  return { requestOperationsFetching };
 }
 
 export const OperationHistory = connect<StateProps, DispatchProps, OwnProps, ApplicationState>(

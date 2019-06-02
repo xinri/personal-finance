@@ -1,11 +1,11 @@
 import { OperationComponent, OwnProps, StateProps, DispatchProps } from "./Operation";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import { ExtendedDispatch } from "../../business/definitions";
 import { ApplicationState } from "../../business/state";
 import { Operation as IOperation } from "../../business/operation";
 import { OperationState } from "../../business/operation/state";
 import { applicationSelectors } from "../../business/selectors";
-import { ApplicationAction, applicationActionCreators } from "../../business/actions";
+import { applicationThunksCreators } from "../../business/thunks";
 
 function mapStateToProps(state: ApplicationState, { id }: OwnProps): StateProps {
   const operationState: OperationState = state.operation;
@@ -13,12 +13,12 @@ function mapStateToProps(state: ApplicationState, { id }: OwnProps): StateProps 
   return { operation };
 }
 
-function mapDispatchToProps(dispatch: Dispatch, { id }: OwnProps): DispatchProps {
-  const onDelete = () => {
-    const action: ApplicationAction = applicationActionCreators.operation.createDeleteAction(id, "DELETE_OPERATION");
-    dispatch(action);
+function mapDispatchToProps(dispatch: ExtendedDispatch, { id }: OwnProps): DispatchProps {
+  const requestDeleteOperation = () => {
+    const thunk = applicationThunksCreators.createDeleteOperationRequestedThunk(id);
+    dispatch(thunk);
   };
-  return { onDelete };
+  return { requestDeleteOperation };
 }
 
 export const Operation = connect<StateProps, DispatchProps, OwnProps, ApplicationState>(

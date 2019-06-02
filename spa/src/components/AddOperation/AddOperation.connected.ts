@@ -1,20 +1,16 @@
 import { AddOperationComponent, DispatchProps } from "./AddOperation";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import { ExtendedDispatch } from "../../business/definitions";
 import { Operation } from "../../business/operation";
 import { ApplicationState } from "../../business/state";
-import { applicationActionCreators, ApplicationAction } from "../../business/actions";
+import { applicationThunksCreators } from "../../business/thunks";
 
-function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
-  const onNewOperation = (operation: Operation) => {
-    const action: ApplicationAction = applicationActionCreators.operation.createInsertAction(
-      operation.id,
-      operation,
-      "ADD_OPERATION"
-    );
-    dispatch(action);
+function mapDispatchToProps(dispatch: ExtendedDispatch): DispatchProps {
+  const requestAddOperation = (operation: Operation) => {
+    const thunk = applicationThunksCreators.createAddOperationRequestedThunk(operation);
+    dispatch(thunk);
   };
-  return { onNewOperation };
+  return { requestAddOperation };
 }
 
 export const AddOperation = connect<{}, DispatchProps, {}, ApplicationState>(

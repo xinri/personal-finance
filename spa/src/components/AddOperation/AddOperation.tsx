@@ -1,13 +1,12 @@
 import React from "react";
 import { Operation } from "../../business/operation/model";
-import { addOperation } from "./api";
 import uuid from "uuid/v4";
 import "./AddOperation.scss";
 
 export interface OwnProps {}
 
 export interface DispatchProps {
-  onNewOperation(operation: Operation): void;
+  requestAddOperation(operation: Operation): void;
 }
 
 type Props = OwnProps & DispatchProps;
@@ -59,10 +58,8 @@ export class AddOperationComponent extends React.Component<Props, State> {
         date: new Date(),
         amount
       };
-      addOperation().then(() => {
-        this.props.onNewOperation(operation);
-        this.setValue(undefined);
-      });
+      this.props.requestAddOperation(operation);
+      this.setValue(undefined);
     }
   };
 
