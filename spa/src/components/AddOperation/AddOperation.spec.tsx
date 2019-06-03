@@ -5,10 +5,10 @@ import { AddOperationComponent } from "./AddOperation";
 import { Operation } from "../../business/operation/model";
 
 describe("<AddOperation />", () => {
-  it("should not call onNewOperation when the user inputs 0 and clicks the add button", () => {
+  it("should not call requestAddOperation when the user inputs 0 and clicks the add button", () => {
     // GIVEN
-    const onNewOperation = jest.fn();
-    const element = <AddOperationComponent onNewOperation={onNewOperation} />;
+    const requestAddOperation = jest.fn();
+    const element = <AddOperationComponent requestAddOperation={requestAddOperation} />;
     const wrapper: ReactWrapper = mount(element);
     const input: ReactWrapper = wrapper.find(".input-amount");
     const button: ReactWrapper = wrapper.find(".add-amount");
@@ -18,13 +18,13 @@ describe("<AddOperation />", () => {
     button.simulate("click");
 
     // THEN
-    expect(onNewOperation).not.toHaveBeenCalled();
+    expect(requestAddOperation).not.toHaveBeenCalled();
   });
 
-  it("should not call onNewOperation when the user resets the input and clicks the add button", () => {
+  it("should not call requestAddOperation when the user resets the input and clicks the add button", () => {
     // GIVEN
-    const onNewOperation = jest.fn();
-    const element = <AddOperationComponent onNewOperation={onNewOperation} />;
+    const requestAddOperation = jest.fn();
+    const element = <AddOperationComponent requestAddOperation={requestAddOperation} />;
     const wrapper: ReactWrapper = mount(element);
     const input: ReactWrapper = wrapper.find(".input-amount");
     const button: ReactWrapper = wrapper.find(".add-amount");
@@ -35,16 +35,16 @@ describe("<AddOperation />", () => {
     button.simulate("click");
 
     // THEN
-    expect(onNewOperation).not.toHaveBeenCalled();
+    expect(requestAddOperation).not.toHaveBeenCalled();
   });
 
-  it.skip("should call onNewOperation when the user inputs a valid value and clicks the add button, then clear input value", () => {
+  it("should call requestAddOperation when the user inputs a valid value and clicks the add button, then clear input value", () => {
     // GIVEN
     const result: any = {};
-    const onNewOperation = jest.fn().mockImplementation(function setOperation({ amount }: Operation): void {
+    const requestAddOperation = jest.fn().mockImplementation(function setOperation({ amount }: Operation): void {
       result["amount"] = amount;
     });
-    const element = <AddOperationComponent onNewOperation={onNewOperation} />;
+    const element = <AddOperationComponent requestAddOperation={requestAddOperation} />;
     const wrapper: ReactWrapper = mount(element);
     const input: ReactWrapper = wrapper.find(".input-amount");
     const button: ReactWrapper = wrapper.find(".add-amount");
@@ -54,7 +54,7 @@ describe("<AddOperation />", () => {
     button.simulate("click");
 
     // THEN
-    expect(onNewOperation).toHaveBeenCalledTimes(1);
+    expect(requestAddOperation).toHaveBeenCalledTimes(1);
     expect(result.amount).toEqual(100);
     expect(input.getDOMNode().getAttribute("value")).toEqual("");
   });
