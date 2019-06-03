@@ -1,5 +1,3 @@
-import { Omit } from "../../util/omit";
-
 export interface Operation {
   id: string;
   date: Date;
