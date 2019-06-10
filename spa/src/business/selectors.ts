@@ -1,5 +1,5 @@
-import { operationSelectors } from "./operation";
+import { accountSelectors } from "./account";
 
 export const applicationSelectors = {
-  operation: operationSelectors
+  account: accountSelectors
 };

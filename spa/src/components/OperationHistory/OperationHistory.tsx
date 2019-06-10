@@ -1,5 +1,5 @@
 import React from "react";
-import { Operation as IOperation } from "../../business/operation/model";
+import { Operation as IOperation } from "../../business/account/operation/model";
 import { Operation } from "../Operation";
 
 export interface OwnProps {}

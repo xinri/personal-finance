@@ -1,7 +1,7 @@
-import { OperationAction, operationActionCreators } from "./operation/actions";
+import { AccountAction, accountActionCreators } from "./account/actions";
 
-export type ApplicationAction = OperationAction;
+export type ApplicationAction = AccountAction;
 
 export const applicationActionCreators = {
-  operation: operationActionCreators
+  account: accountActionCreators
 };

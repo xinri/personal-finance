@@ -2,20 +2,20 @@ import { OperationHistoryComponent, OwnProps, StateProps, DispatchProps } from "
 import { connect } from "react-redux";
 import { ExtendedDispatch } from "../../business/definitions";
 import { ApplicationState } from "../../business/state";
-import { Operation } from "../../business/operation";
+import { Operation } from "../../business/account/operation";
 import { applicationSelectors } from "../../business/selectors";
-import { OperationState } from "../../business/operation/state";
+import { OperationState } from "../../business/account/operation/state";
 import { applicationThunksCreators } from "../../business/thunks";
 
 function mapStateToProps(state: ApplicationState): StateProps {
   const operationState: OperationState = state.operation;
-  const operations: Operation[] = applicationSelectors.operation.getAllOperations(operationState);
+  const operations: Operation[] = applicationSelectors.account.operation.getAllOperations(operationState);
   return { operations };
 }
 
 function mapDispatchToProps(dispatch: ExtendedDispatch): DispatchProps {
   const requestOperationsFetching = () => {
-    const thunk = applicationThunksCreators.createOperationsFetchingRequestedThunk();
+    const thunk = applicationThunksCreators.account.operation.createOperationsFetchingRequestedThunk();
     dispatch(thunk);
   };
   return { requestOperationsFetching };

@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
-import { operationReducer } from "./operation";
+import { accountReducer } from "./account/reducer";
+import { operationReducer } from "./account/operation";
 
 export const rootReducer = combineReducers({
+  account: accountReducer,
   operation: operationReducer
 });

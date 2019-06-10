@@ -1,5 +1,5 @@
-import { operationThunksCreators } from "./operation";
+import { accountThunksCreators } from "./account/thunks";
 
 export const applicationThunksCreators = {
-  ...operationThunksCreators
+  account: accountThunksCreators
 };

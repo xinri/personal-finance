@@ -1,8 +1,8 @@
 import React from "react";
 import { OperationHistoryComponent } from "./OperationHistory";
 import { shallow, ShallowWrapper } from "enzyme";
-import { Operation as IOperation } from "../../business/operation";
-import { operationFixtures } from "../../business/operation/fixtures";
+import { Operation as IOperation } from "../../business/account/operation";
+import { operationFixtures } from "../../business/account/operation/fixtures";
 import { Operation } from "../Operation";
 
 const { operation0, operation1, operation2 } = operationFixtures;

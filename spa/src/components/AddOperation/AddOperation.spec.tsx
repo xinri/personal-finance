@@ -2,7 +2,7 @@ import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { AddOperationComponent } from "./AddOperation";
 // import { AddOperation } from "./AddOperation.uncontrolled";
-import { Operation } from "../../business/operation/model";
+import { Operation } from "../../business/account/operation/model";
 
 describe("<AddOperation />", () => {
   it("should not call requestAddOperation when the user inputs 0 and clicks the add button", () => {

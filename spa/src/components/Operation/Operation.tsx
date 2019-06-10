@@ -1,5 +1,5 @@
 import React from "react";
-import { Operation as IOperation } from "../../business/operation/model";
+import { Operation as IOperation } from "../../business/account/operation/model";
 import { FinanceDate } from "../FinanceDate";
 import { LabeledDebitOrCredit } from "../LabeledDebitOrCredit";
 import { OperationActions } from "../OperationActions/OperationActions";

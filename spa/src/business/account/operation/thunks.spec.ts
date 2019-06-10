@@ -6,12 +6,12 @@ import {
 } from "./thunks";
 import { Operation } from "./model";
 import { operationFixtures } from "./fixtures";
-import { mockStore, mockState } from "../../util/mockStore";
-import { Thunk, ExtraArgument } from "../definitions";
+import { mockStore, mockState } from "../../../util/mockStore";
+import { Thunk, ExtraArgument } from "../../definitions";
 import { batchActions } from "redux-batched-actions";
-import { applicationActionCreators } from "../actions";
-import { ApplicationState } from "../state";
-import { RecursivePartial } from "../../util/recursivePartial";
+import { applicationActionCreators } from "../../actions";
+import { ApplicationState } from "../../state";
+import { RecursivePartial } from "../../../util/recursivePartial";
 
 const { operation0, operation1, operation2, operations } = operationFixtures;
 
@@ -22,10 +22,18 @@ describe("Test of createOperationsFetchingRequestedThunk()", () => {
     const getOperations = jest.fn().mockResolvedValue(operations);
     const extraArgument: RecursivePartial<ExtraArgument> = {
       thunkCreators: {
-        createOperationsFetchedThunk
+        account: {
+          operation: {
+            createOperationsFetchedThunk
+          }
+        }
       },
       api: {
-        getOperations
+        account: {
+          operation: {
+            getOperations
+          }
+        }
       }
     };
     const initialState: ApplicationState = mockState();
@@ -60,9 +68,21 @@ describe("Test of createOperationsFetchedThunk()", () => {
     const expectedActions = [
       batchActions(
         [
-          applicationActionCreators.operation.createInsertAction(operation0.id, operation0, "ADD_FETCHED_OPERATION"),
-          applicationActionCreators.operation.createInsertAction(operation1.id, operation1, "ADD_FETCHED_OPERATION"),
-          applicationActionCreators.operation.createInsertAction(operation2.id, operation2, "ADD_FETCHED_OPERATION")
+          applicationActionCreators.account.operation.createInsertAction(
+            operation0.id,
+            operation0,
+            "ADD_FETCHED_OPERATION"
+          ),
+          applicationActionCreators.account.operation.createInsertAction(
+            operation1.id,
+            operation1,
+            "ADD_FETCHED_OPERATION"
+          ),
+          applicationActionCreators.account.operation.createInsertAction(
+            operation2.id,
+            operation2,
+            "ADD_FETCHED_OPERATION"
+          )
         ],
         "ADD_FETCHED_OPERATIONS"
       )
@@ -77,7 +97,11 @@ describe("Test of createAddOperationRequestedThunk()", () => {
     const addOperation = jest.fn().mockResolvedValue("OK");
     const extraArgument: RecursivePartial<ExtraArgument> = {
       api: {
-        addOperation
+        account: {
+          operation: {
+            addOperation
+          }
+        }
       }
     };
     const initialState: ApplicationState = mockState();
@@ -92,7 +116,7 @@ describe("Test of createAddOperationRequestedThunk()", () => {
     expect(addOperation).toHaveBeenCalled();
     const actualActions = store.getActions();
     const expectedActions = [
-      applicationActionCreators.operation.createInsertAction(operation0.id, operation0, "ADD_OPERATION")
+      applicationActionCreators.account.operation.createInsertAction(operation0.id, operation0, "ADD_OPERATION")
     ];
     expect(actualActions).toEqual(expectedActions);
   });
@@ -104,7 +128,11 @@ describe("Test of createDeleteOperationRequestedThunk()", () => {
     const deleteOperation = jest.fn().mockResolvedValue("OK");
     const extraArgument: RecursivePartial<ExtraArgument> = {
       api: {
-        deleteOperation
+        account: {
+          operation: {
+            deleteOperation
+          }
+        }
       }
     };
     const initialState: ApplicationState = mockState();
@@ -118,7 +146,9 @@ describe("Test of createDeleteOperationRequestedThunk()", () => {
     // THEN
     expect(deleteOperation).toHaveBeenCalled();
     const actualActions = store.getActions();
-    const expectedActions = [applicationActionCreators.operation.createDeleteAction(operation0.id, "DELETE_OPERATION")];
+    const expectedActions = [
+      applicationActionCreators.account.operation.createDeleteAction(operation0.id, "DELETE_OPERATION")
+    ];
     expect(actualActions).toEqual(expectedActions);
   });
 });

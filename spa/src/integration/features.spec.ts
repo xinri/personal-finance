@@ -23,8 +23,12 @@ it("Should allow to display operations", done => {
 });
 
 it("Should allow to add an operation", done => {
-  const applicationApi = ({
-    addOperation: jest.fn().mockResolvedValue("OK")
+  const applicationApi: ApplicationApi = ({
+    account: {
+      operation: {
+        addOperation: jest.fn().mockResolvedValue("OK")
+      }
+    }
   } as unknown) as ApplicationApi;
 
   const t = getTester<ApplicationState, typeof entryPoints, Dispatch, Application>({
@@ -42,7 +46,11 @@ it("Should allow to add an operation", done => {
 
 it("Should allow to remove an operation", done => {
   const applicationApi = ({
-    deleteOperation: jest.fn().mockResolvedValue("OK")
+    account: {
+      operation: {
+        deleteOperation: jest.fn().mockResolvedValue("OK")
+      }
+    }
   } as unknown) as ApplicationApi;
 
   const t = getTester<ApplicationState, typeof entryPoints, Dispatch, Application>({

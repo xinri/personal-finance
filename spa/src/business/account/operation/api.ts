@@ -1,6 +1,6 @@
 import { Operation, SerializedOperation, deserializeOperations } from "./model";
 import { OperationApi } from "./thunks";
-import { _get, _post, _delete } from "../../util/xhr";
+import { _get, _post, _delete } from "../../../util/xhr";
 
 export const operationApi: OperationApi = {
   getOperations,

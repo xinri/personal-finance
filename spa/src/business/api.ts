@@ -1,8 +1,7 @@
-import { OperationApi } from "./operation/thunks";
-import { operationApi } from "./operation/api";
+import { accountApi } from "./account/api";
 
-export type ApplicationApi = OperationApi;
-
-export const applicationApi: ApplicationApi = {
-  ...operationApi
+export const applicationApi = {
+  account: accountApi
 };
+
+export type ApplicationApi = typeof applicationApi;
