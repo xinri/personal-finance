@@ -3,27 +3,25 @@ import { Operation } from "./model";
 import { ApplicationState } from "../state";
 import { applicationActionCreators, ApplicationAction } from "../actions";
 import { BatchAction, batchActions } from "redux-batched-actions";
-import { operationApi } from "./api";
-import partial from "ramda/src/partial";
 
 export type OperationApi = GetOperationsApi & AddOperationApi & DeleteOperationApi;
+
+export const operationThunksCreators = {
+  createOperationsFetchingRequestedThunk,
+  createOperationsFetchedThunk,
+  createAddOperationRequestedThunk,
+  createDeleteOperationRequestedThunk
+};
 
 interface GetOperationsApi {
   getOperations(): Promise<Operation[]>;
 }
 
-export const operationThunksCreators = {
-  createOperationsFetchingRequestedThunk: partial<Thunk>(createOperationsFetchingRequestedThunk, [operationApi]),
-  createOperationsFetchedThunk,
-  createAddOperationRequestedThunk: partial(createAddOperationRequestedThunk, [operationApi]),
-  createDeleteOperationRequestedThunk: partial(createDeleteOperationRequestedThunk, [operationApi])
-};
-
-export function createOperationsFetchingRequestedThunk({ getOperations }: GetOperationsApi): Thunk {
+export function createOperationsFetchingRequestedThunk(): Thunk {
   return async (
     dispatch: ExtendedDispatch,
     _: () => ApplicationState,
-    { thunkCreators: { createOperationsFetchedThunk } }
+    { thunkCreators: { createOperationsFetchedThunk }, api: { getOperations } }
   ) => {
     const operations: Operation[] = await getOperations();
     dispatch(createOperationsFetchedThunk(operations));
@@ -44,8 +42,8 @@ interface AddOperationApi {
   addOperation(operation: Operation): Promise<void>;
 }
 
-export function createAddOperationRequestedThunk({ addOperation }: AddOperationApi, operation: Operation): Thunk {
-  return async (dispatch: ExtendedDispatch, _: () => ApplicationState) => {
+export function createAddOperationRequestedThunk(operation: Operation): Thunk {
+  return async (dispatch: ExtendedDispatch, _: () => ApplicationState, { api: { addOperation } }) => {
     await addOperation(operation);
     const action: ApplicationAction = applicationActionCreators.operation.createInsertAction(
       operation.id,
@@ -60,8 +58,8 @@ interface DeleteOperationApi {
   deleteOperation(id: string): Promise<void>;
 }
 
-export function createDeleteOperationRequestedThunk({ deleteOperation }: DeleteOperationApi, id: string): Thunk {
-  return async (dispatch: ExtendedDispatch, _: () => ApplicationState) => {
+export function createDeleteOperationRequestedThunk(id: string): Thunk {
+  return async (dispatch: ExtendedDispatch, _: () => ApplicationState, { api: { deleteOperation } }) => {
     await deleteOperation(id);
     const action: ApplicationAction = applicationActionCreators.operation.createDeleteAction(id, "DELETE_OPERATION");
     dispatch(action);

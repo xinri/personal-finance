@@ -7,7 +7,7 @@ import {
 import { Operation } from "./model";
 import { operationFixtures } from "./fixtures";
 import { mockStore, mockState } from "../../util/mockStore";
-import { Thunk, Dispatchable, ExtraArgument } from "../definitions";
+import { Thunk, ExtraArgument } from "../definitions";
 import { batchActions } from "redux-batched-actions";
 import { applicationActionCreators } from "../actions";
 import { ApplicationState } from "../state";
@@ -18,18 +18,21 @@ const { operation0, operation1, operation2, operations } = operationFixtures;
 describe("Test of createOperationsFetchingRequestedThunk()", () => {
   it("should return a thunk that calls the API, then dispatches an operationsFetchedThunk", async () => {
     // GIVEN
-    const initialState: ApplicationState = mockState();
     const createOperationsFetchedThunk: Thunk = jest.fn().mockReturnValue({ type: "createOperationsFetchedThunk" });
+    const getOperations = jest.fn().mockResolvedValue(operations);
     const extraArgument: RecursivePartial<ExtraArgument> = {
       thunkCreators: {
         createOperationsFetchedThunk
+      },
+      api: {
+        getOperations
       }
     };
+    const initialState: ApplicationState = mockState();
     const store = mockStore(extraArgument, initialState);
-    const getOperations = jest.fn().mockReturnValue(Promise.resolve(operations));
 
     // WHEN
-    const thunk: Thunk = createOperationsFetchingRequestedThunk({ getOperations });
+    const thunk: Thunk = createOperationsFetchingRequestedThunk();
     await store.dispatch(thunk);
 
     // THEN
@@ -71,13 +74,18 @@ describe("Test of createOperationsFetchedThunk()", () => {
 describe("Test of createAddOperationRequestedThunk()", () => {
   it("should return a thunk that calls the API, then dispatches an ADD_OPERATION action", async () => {
     // GIVEN
+    const addOperation = jest.fn().mockResolvedValue("OK");
+    const extraArgument: RecursivePartial<ExtraArgument> = {
+      api: {
+        addOperation
+      }
+    };
     const initialState: ApplicationState = mockState();
-    const store = mockStore({}, initialState);
-    const addOperation = jest.fn().mockReturnValue(Promise.resolve());
+    const store = mockStore(extraArgument, initialState);
     const operation: Operation = operation0;
 
     // WHEN
-    const thunk: Thunk = createAddOperationRequestedThunk({ addOperation }, operation);
+    const thunk: Thunk = createAddOperationRequestedThunk(operation);
     await store.dispatch(thunk);
 
     // THEN
@@ -93,13 +101,18 @@ describe("Test of createAddOperationRequestedThunk()", () => {
 describe("Test of createDeleteOperationRequestedThunk()", () => {
   it("should return a thunk that calls the API, then dispatches a DELETE_OPERATION action", async () => {
     // GIVEN
+    const deleteOperation = jest.fn().mockResolvedValue("OK");
+    const extraArgument: RecursivePartial<ExtraArgument> = {
+      api: {
+        deleteOperation
+      }
+    };
     const initialState: ApplicationState = mockState();
-    const store = mockStore({}, initialState);
-    const deleteOperation = jest.fn().mockReturnValue(Promise.resolve());
+    const store = mockStore(extraArgument, initialState);
     const id: string = operation0.id;
 
     // WHEN
-    const thunk: Thunk = createDeleteOperationRequestedThunk({ deleteOperation }, id);
+    const thunk: Thunk = createDeleteOperationRequestedThunk(id);
     await store.dispatch(thunk);
 
     // THEN
