@@ -15,7 +15,7 @@ export class Account {
   }
 
   private async inputAmount(amount: number): Promise<void> {
-    await t.typeText(e2eSelector(NEW_OPERATION_INPUT_AMOUNT), amount.toString());
+    await t.typeText(e2eSelector(NEW_OPERATION_INPUT_AMOUNT), amount.toString(), { paste: true });
   }
 
   private async addAmount(): Promise<void> {
