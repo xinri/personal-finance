@@ -1,9 +1,4 @@
-import {
-  createOperationsFetchingRequestedThunk,
-  createOperationsFetchedThunk,
-  createAddOperationRequestedThunk,
-  createDeleteOperationRequestedThunk
-} from "./thunks";
+import { fetchOperations, operationsFetched, addOperation, deleteOperation } from "./thunks";
 import { Operation } from "./model";
 import { operationFixtures } from "./fixtures";
 import { mockStore, mockState } from "../../../util/mockStore";
@@ -15,16 +10,16 @@ import { RecursivePartial } from "../../../util/recursivePartial";
 
 const { operation0, operation1, operation2, operations } = operationFixtures;
 
-describe("Test of createOperationsFetchingRequestedThunk()", () => {
+describe("Test of fetchOperations()", () => {
   it("should return a thunk that calls the API, then dispatches an operationsFetchedThunk", async () => {
     // GIVEN
-    const createOperationsFetchedThunk: Thunk = jest.fn().mockReturnValue({ type: "createOperationsFetchedThunk" });
+    const operationsFetched: Thunk = jest.fn().mockReturnValue({ type: "operationsFetched" });
     const getOperations = jest.fn().mockResolvedValue(operations);
     const extraArgument: RecursivePartial<ExtraArgument> = {
       thunkCreators: {
         account: {
           operation: {
-            createOperationsFetchedThunk
+            operationsFetched
           }
         }
       },
@@ -40,27 +35,27 @@ describe("Test of createOperationsFetchingRequestedThunk()", () => {
     const store = mockStore(extraArgument, initialState);
 
     // WHEN
-    const thunk: Thunk = createOperationsFetchingRequestedThunk();
+    const thunk: Thunk = fetchOperations();
     await store.dispatch(thunk);
 
     // THEN
     expect(getOperations).toHaveBeenCalled();
-    expect(createOperationsFetchedThunk).toHaveBeenCalledWith(operations);
+    expect(operationsFetched).toHaveBeenCalledWith(operations);
     const actualActions = store.getActions();
-    const expectedActions = [{ type: "createOperationsFetchedThunk" }];
+    const expectedActions = [{ type: "operationsFetched" }];
     expect(actualActions).toEqual(expectedActions);
   });
 });
 
-describe("Test of createOperationsFetchedThunk()", () => {
-  it("should return a thunk that dispatches a batch of ADD_FETCHED_OPERATION actions, one per operation", () => {
+describe("Test of operationsFetched()", () => {
+  it("should return a thunk that dispatches a batch of FETCHED_OPERATION_ADDED actions, one per operation", () => {
     // GIVEN
     const initialState: ApplicationState = mockState();
     const store = mockStore({}, initialState);
     const operations: Operation[] = [operation0, operation1, operation2];
 
     // WHEN
-    const thunk: Thunk = createOperationsFetchedThunk(operations);
+    const thunk: Thunk = operationsFetched(operations);
     store.dispatch(thunk);
 
     // THEN
@@ -71,28 +66,28 @@ describe("Test of createOperationsFetchedThunk()", () => {
           applicationActionCreators.account.operation.createInsertAction(
             operation0.id,
             operation0,
-            "ADD_FETCHED_OPERATION"
+            "FETCHED_OPERATION_ADDED"
           ),
           applicationActionCreators.account.operation.createInsertAction(
             operation1.id,
             operation1,
-            "ADD_FETCHED_OPERATION"
+            "FETCHED_OPERATION_ADDED"
           ),
           applicationActionCreators.account.operation.createInsertAction(
             operation2.id,
             operation2,
-            "ADD_FETCHED_OPERATION"
+            "FETCHED_OPERATION_ADDED"
           )
         ],
-        "ADD_FETCHED_OPERATIONS"
+        "ALL_FETCHED_OPERATIONS_ADDED"
       )
     ];
     expect(actualActions).toEqual(expectedActions);
   });
 });
 
-describe("Test of createAddOperationRequestedThunk()", () => {
-  it("should return a thunk that calls the API, then dispatches an ADD_OPERATION action", async () => {
+describe("Test of addOperation()", () => {
+  it("should return a thunk that calls the API, then dispatches an OPERATION_ADDED action", async () => {
     // GIVEN
     const addOperation = jest.fn().mockResolvedValue("OK");
     const extraArgument: RecursivePartial<ExtraArgument> = {
@@ -109,21 +104,21 @@ describe("Test of createAddOperationRequestedThunk()", () => {
     const operation: Operation = operation0;
 
     // WHEN
-    const thunk: Thunk = createAddOperationRequestedThunk(operation);
+    const thunk: Thunk = addOperation(operation);
     await store.dispatch(thunk);
 
     // THEN
     expect(addOperation).toHaveBeenCalled();
     const actualActions = store.getActions();
     const expectedActions = [
-      applicationActionCreators.account.operation.createInsertAction(operation0.id, operation0, "ADD_OPERATION")
+      applicationActionCreators.account.operation.createInsertAction(operation0.id, operation0, "OPERATION_ADDED")
     ];
     expect(actualActions).toEqual(expectedActions);
   });
 });
 
-describe("Test of createDeleteOperationRequestedThunk()", () => {
-  it("should return a thunk that calls the API, then dispatches a DELETE_OPERATION action", async () => {
+describe("Test of deleteOperation()", () => {
+  it("should return a thunk that calls the API, then dispatches a OPERATION_DELETED action", async () => {
     // GIVEN
     const deleteOperation = jest.fn().mockResolvedValue("OK");
     const extraArgument: RecursivePartial<ExtraArgument> = {
@@ -140,14 +135,14 @@ describe("Test of createDeleteOperationRequestedThunk()", () => {
     const id: string = operation0.id;
 
     // WHEN
-    const thunk: Thunk = createDeleteOperationRequestedThunk(id);
+    const thunk: Thunk = deleteOperation(id);
     await store.dispatch(thunk);
 
     // THEN
     expect(deleteOperation).toHaveBeenCalled();
     const actualActions = store.getActions();
     const expectedActions = [
-      applicationActionCreators.account.operation.createDeleteAction(operation0.id, "DELETE_OPERATION")
+      applicationActionCreators.account.operation.createDeleteAction(operation0.id, "OPERATION_DELETED")
     ];
     expect(actualActions).toEqual(expectedActions);
   });

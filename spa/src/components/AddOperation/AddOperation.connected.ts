@@ -7,7 +7,7 @@ import { applicationThunksCreators } from "../../business/thunks";
 
 function mapDispatchToProps(dispatch: ExtendedDispatch): DispatchProps {
   const requestAddOperation = (operation: Operation) => {
-    const thunk = applicationThunksCreators.account.operation.createAddOperationRequestedThunk(operation);
+    const thunk = applicationThunksCreators.account.operation.addOperation(operation);
     dispatch(thunk);
   };
   return { requestAddOperation };

@@ -7,24 +7,24 @@ import { BatchAction, batchActions } from "redux-batched-actions";
 export type OperationApi = GetOperationsApi & AddOperationApi & DeleteOperationApi;
 
 export const operationThunksCreators = {
-  createOperationsFetchingRequestedThunk,
-  createOperationsFetchedThunk,
-  createAddOperationRequestedThunk,
-  createDeleteOperationRequestedThunk
+  fetchOperations,
+  operationsFetched,
+  addOperation,
+  deleteOperation
 };
 
 interface GetOperationsApi {
   getOperations(): Promise<Operation[]>;
 }
 
-export function createOperationsFetchingRequestedThunk(): Thunk {
+export function fetchOperations(): Thunk {
   return async (
     dispatch: ExtendedDispatch,
     _: () => ApplicationState,
     {
       thunkCreators: {
         account: {
-          operation: { createOperationsFetchedThunk }
+          operation: { operationsFetched }
         }
       },
       api: {
@@ -35,20 +35,20 @@ export function createOperationsFetchingRequestedThunk(): Thunk {
     }
   ) => {
     const operations: Operation[] = await getOperations();
-    dispatch(createOperationsFetchedThunk(operations));
+    dispatch(operationsFetched(operations));
   };
 }
 
-export function createOperationsFetchedThunk(operations: Operation[]): Thunk {
+export function operationsFetched(operations: Operation[]): Thunk {
   return (dispatch: ExtendedDispatch, _: () => ApplicationState) => {
     const actions = operations.map((operation: Operation) => {
       return applicationActionCreators.account.operation.createInsertAction(
         operation.id,
         operation,
-        "ADD_FETCHED_OPERATION"
+        "FETCHED_OPERATION_ADDED"
       );
     });
-    const batchedAction: BatchAction = batchActions(actions, "ADD_FETCHED_OPERATIONS");
+    const batchedAction: BatchAction = batchActions(actions, "ALL_FETCHED_OPERATIONS_ADDED");
     dispatch(batchedAction);
   };
 }
@@ -57,7 +57,7 @@ interface AddOperationApi {
   addOperation(operation: Operation): Promise<void>;
 }
 
-export function createAddOperationRequestedThunk(operation: Operation): Thunk {
+export function addOperation(operation: Operation): Thunk {
   return async (
     dispatch: ExtendedDispatch,
     _: () => ApplicationState,
@@ -73,7 +73,7 @@ export function createAddOperationRequestedThunk(operation: Operation): Thunk {
     const action: ApplicationAction = applicationActionCreators.account.operation.createInsertAction(
       operation.id,
       operation,
-      "ADD_OPERATION"
+      "OPERATION_ADDED"
     );
     dispatch(action);
   };
@@ -83,7 +83,7 @@ interface DeleteOperationApi {
   deleteOperation(id: string): Promise<void>;
 }
 
-export function createDeleteOperationRequestedThunk(id: string): Thunk {
+export function deleteOperation(id: string): Thunk {
   return async (
     dispatch: ExtendedDispatch,
     _: () => ApplicationState,
@@ -98,7 +98,7 @@ export function createDeleteOperationRequestedThunk(id: string): Thunk {
     await deleteOperation(id);
     const action: ApplicationAction = applicationActionCreators.account.operation.createDeleteAction(
       id,
-      "DELETE_OPERATION"
+      "OPERATION_DELETED"
     );
     dispatch(action);
   };

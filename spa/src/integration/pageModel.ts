@@ -26,12 +26,12 @@ export const enhancer: Enhancer<ExtendedDispatch, ApplicationState, Application>
   state: ApplicationState
 ) => {
   async function addOperation(operation: Operation): Promise<void> {
-    await dispatch(applicationThunksCreators.account.operation.createAddOperationRequestedThunk(operation));
+    await dispatch(applicationThunksCreators.account.operation.addOperation(operation));
   }
   async function deleteOperation(count: Count): Promise<void> {
     const operations: Operation[] = [operation0, operation1, operation2];
     const id: string = operations[count].id;
-    await dispatch(applicationThunksCreators.account.operation.createDeleteOperationRequestedThunk(id));
+    await dispatch(applicationThunksCreators.account.operation.deleteOperation(id));
   }
   function expectNumberOfOperationsToEqual(n: number): void {
     expect(applicationSelectors.account.operation.getAllOperations(state.operation).length).toEqual(n);

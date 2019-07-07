@@ -15,7 +15,7 @@ function mapStateToProps(state: ApplicationState, { id }: OwnProps): StateProps 
 
 function mapDispatchToProps(dispatch: ExtendedDispatch, { id }: OwnProps): DispatchProps {
   const requestDeleteOperation = () => {
-    const thunk = applicationThunksCreators.account.operation.createDeleteOperationRequestedThunk(id);
+    const thunk = applicationThunksCreators.account.operation.deleteOperation(id);
     dispatch(thunk);
   };
   return { requestDeleteOperation };

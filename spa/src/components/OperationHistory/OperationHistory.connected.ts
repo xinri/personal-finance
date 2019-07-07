@@ -15,7 +15,7 @@ function mapStateToProps(state: ApplicationState): StateProps {
 
 function mapDispatchToProps(dispatch: ExtendedDispatch): DispatchProps {
   const requestOperationsFetching = () => {
-    const thunk = applicationThunksCreators.account.operation.createOperationsFetchingRequestedThunk();
+    const thunk = applicationThunksCreators.account.operation.fetchOperations();
     dispatch(thunk);
   };
   return { requestOperationsFetching };
