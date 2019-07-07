@@ -33,10 +33,10 @@ export const enhancer: Enhancer<ExtendedDispatch, ApplicationState, Application>
     await dispatch(business.account.operation.deleteOperation(id));
   }
   function expectNumberOfOperationsToEqual(n: number): void {
-    expect(business.account.operation.getAllOperations(state.operation).length).toEqual(n);
+    expect(business.account.operation.getAllOperations(state).length).toEqual(n);
   }
   function expectBalanceToEqual(value: number): void {
-    expect(business.account.operation.computeBalance(state.operation)).toEqual(value);
+    expect(business.account.operation.computeBalance(state)).toEqual(value);
   }
   return {
     addOperation,

@@ -3,12 +3,10 @@ import { connect } from "react-redux";
 import { ExtendedDispatch } from "../../business/definitions";
 import { ApplicationState } from "../../business/state";
 import { Operation } from "../../business/account/operation";
-import { OperationState } from "../../business/account/operation/state";
 import business from "../../business";
 
 function mapStateToProps(state: ApplicationState): StateProps {
-  const operationState: OperationState = state.operation;
-  const operations: Operation[] = business.account.operation.getAllOperations(operationState);
+  const operations: Operation[] = business.account.operation.getAllOperations(state);
   return { operations };
 }
 

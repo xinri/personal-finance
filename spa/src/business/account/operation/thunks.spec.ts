@@ -1,12 +1,13 @@
 import { fetchOperations, operationsFetched, addOperation, deleteOperation } from "./thunks";
 import { Operation } from "./model";
 import { operationFixtures } from "./fixtures";
-import { mockStore, mockState } from "../../../util/mockStore";
+import { mockStore } from "../../../util/mockStore";
 import { Thunk, ExtraArgument } from "../../definitions";
 import { batchActions } from "redux-batched-actions";
 import { applicationActionCreators } from "../../actions";
 import { ApplicationState } from "../../state";
 import { RecursivePartial } from "../../../util/recursivePartial";
+import { mockObject } from "../../../util/mockObject";
 
 const { operation0, operation1, operation2, operations } = operationFixtures;
 
@@ -31,7 +32,7 @@ describe("Test of fetchOperations()", () => {
         }
       }
     };
-    const initialState: ApplicationState = mockState();
+    const initialState = mockObject<ApplicationState>({});
     const store = mockStore(extraArgument, initialState);
 
     // WHEN
@@ -50,7 +51,7 @@ describe("Test of fetchOperations()", () => {
 describe("Test of operationsFetched()", () => {
   it("should return a thunk that dispatches a batch of FETCHED_OPERATION_ADDED actions, one per operation", () => {
     // GIVEN
-    const initialState: ApplicationState = mockState();
+    const initialState = mockObject<ApplicationState>({});
     const store = mockStore({}, initialState);
     const operations: Operation[] = [operation0, operation1, operation2];
 
@@ -99,7 +100,7 @@ describe("Test of addOperation()", () => {
         }
       }
     };
-    const initialState: ApplicationState = mockState();
+    const initialState = mockObject<ApplicationState>({});
     const store = mockStore(extraArgument, initialState);
     const operation: Operation = operation0;
 
@@ -130,7 +131,7 @@ describe("Test of deleteOperation()", () => {
         }
       }
     };
-    const initialState: ApplicationState = mockState();
+    const initialState = mockObject<ApplicationState>({});
     const store = mockStore(extraArgument, initialState);
     const id: string = operation0.id;
 

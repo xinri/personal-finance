@@ -1,5 +1,5 @@
 import { Operation } from "./model";
-import { OperationState } from "./state";
+import { ApplicationState } from "../../state";
 
 export const operationSelectors = {
   getAllOperations,
@@ -7,11 +7,11 @@ export const operationSelectors = {
   computeBalance
 };
 
-export function getAllOperations(state: OperationState): Operation[] {
+export function getAllOperations({ operation: state }: ApplicationState): Operation[] {
   return Object.keys(state).map((key: string) => state[key]);
 }
 
-export function getOperation(state: OperationState, id: string): Operation {
+export function getOperation({ operation: state }: ApplicationState, id: string): Operation {
   const operation: Operation | undefined = state[id];
   if (operation === undefined) {
     throw new Error(`No operation matches the following id: ${id}`);
@@ -19,7 +19,7 @@ export function getOperation(state: OperationState, id: string): Operation {
   return operation;
 }
 
-export function computeBalance(state: OperationState): number {
+export function computeBalance(state: ApplicationState): number {
   return getAllOperations(state)
     .map(extractAmount)
     .reduce(sum, 0);
