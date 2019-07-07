@@ -1,4 +1,3 @@
-import { OperationState } from "./state";
 import { operationFixtures } from "./fixtures";
 import { operationSelectors } from "./selectors";
 import { Operation } from "./model";
@@ -42,25 +41,5 @@ describe("Test of getOperation selector", () => {
     expect(() => operationSelectors.getOperation(state, operationId)).toThrowError(
       "No operation matches the following id: Another id"
     );
-  });
-});
-
-describe("Test of computeBalance selector", () => {
-  it("should add amounts of all operations", () => {
-    // GIVEN
-    const state = mockObject<ApplicationState>({
-      operation: {
-        [operation0.id]: operation0,
-        [operation1.id]: operation1,
-        [operation2.id]: operation2
-      }
-    });
-
-    // WHEN
-    const actual: number = operationSelectors.computeBalance(state);
-
-    // THEN
-    const expected: number = operation0.amount + operation1.amount + operation2.amount;
-    expect(actual).toEqual(expected);
   });
 });

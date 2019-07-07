@@ -1,13 +1,13 @@
 import { Account } from "./model";
 
 const account0: Account = {
-  id: "Class 2",
-  title: "Asset Accounts"
+  id: "aa54a5b4-d5b5-4081-8c57-0e39701b0dcc",
+  operationIds: []
 };
 
 const account1: Account = {
-  id: "Class 5",
-  title: "Financial Accounts"
+  id: "690507fc-4509-4a1c-863b-8778443228f1",
+  operationIds: []
 };
 
 const accounts: Account[] = [account0, account1];

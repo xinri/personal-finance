@@ -10,11 +10,9 @@ const { operation0, operation1, operation2 } = operationFixtures;
 describe("<AddOperation />", () => {
   it("should not call onNewOperation when the user inputs 0 and clicks the add button", () => {
     // GIVEN
-    const requestOperationsFetching = jest.fn();
+    const fetchOperations = jest.fn();
     const operations: IOperation[] = [operation0, operation1, operation2];
-    const element = (
-      <OperationHistoryComponent operations={operations} requestOperationsFetching={requestOperationsFetching} />
-    );
+    const element = <OperationHistoryComponent operations={operations} fetchOperations={fetchOperations} />;
 
     // WHEN
     const wrapper: ShallowWrapper = shallow(element);

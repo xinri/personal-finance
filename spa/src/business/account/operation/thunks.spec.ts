@@ -1,52 +1,14 @@
-import { fetchOperations, operationsFetched, addOperation, deleteOperation } from "./thunks";
+import { operationsFetched } from "./thunks";
 import { Operation } from "./model";
 import { operationFixtures } from "./fixtures";
 import { mockStore } from "../../../util/mockStore";
-import { Thunk, ExtraArgument } from "../../definitions";
+import { Thunk } from "../../definitions";
 import { batchActions } from "redux-batched-actions";
 import { applicationActionCreators } from "../../actions";
 import { ApplicationState } from "../../state";
-import { RecursivePartial } from "../../../util/recursivePartial";
 import { mockObject } from "../../../util/mockObject";
 
-const { operation0, operation1, operation2, operations } = operationFixtures;
-
-describe("Test of fetchOperations()", () => {
-  it("should return a thunk that calls the API, then dispatches an operationsFetchedThunk", async () => {
-    // GIVEN
-    const operationsFetched: Thunk = jest.fn().mockReturnValue({ type: "operationsFetched" });
-    const getOperations = jest.fn().mockResolvedValue(operations);
-    const extraArgument: RecursivePartial<ExtraArgument> = {
-      thunkCreators: {
-        account: {
-          operation: {
-            operationsFetched
-          }
-        }
-      },
-      api: {
-        account: {
-          operation: {
-            getOperations
-          }
-        }
-      }
-    };
-    const initialState = mockObject<ApplicationState>({});
-    const store = mockStore(extraArgument, initialState);
-
-    // WHEN
-    const thunk: Thunk = fetchOperations();
-    await store.dispatch(thunk);
-
-    // THEN
-    expect(getOperations).toHaveBeenCalled();
-    expect(operationsFetched).toHaveBeenCalledWith(operations);
-    const actualActions = store.getActions();
-    const expectedActions = [{ type: "operationsFetched" }];
-    expect(actualActions).toEqual(expectedActions);
-  });
-});
+const { operation0, operation1, operation2 } = operationFixtures;
 
 describe("Test of operationsFetched()", () => {
   it("should return a thunk that dispatches a batch of FETCHED_OPERATION_ADDED actions, one per operation", () => {
@@ -82,68 +44,6 @@ describe("Test of operationsFetched()", () => {
         ],
         "ALL_FETCHED_OPERATIONS_ADDED"
       )
-    ];
-    expect(actualActions).toEqual(expectedActions);
-  });
-});
-
-describe("Test of addOperation()", () => {
-  it("should return a thunk that calls the API, then dispatches an OPERATION_ADDED action", async () => {
-    // GIVEN
-    const addOperationApi = jest.fn().mockResolvedValue("OK");
-    const extraArgument: RecursivePartial<ExtraArgument> = {
-      api: {
-        account: {
-          operation: {
-            addOperation: addOperationApi
-          }
-        }
-      }
-    };
-    const initialState = mockObject<ApplicationState>({});
-    const store = mockStore(extraArgument, initialState);
-    const operation: Operation = operation0;
-
-    // WHEN
-    const thunk: Thunk = addOperation(operation);
-    await store.dispatch(thunk);
-
-    // THEN
-    expect(addOperationApi).toHaveBeenCalled();
-    const actualActions = store.getActions();
-    const expectedActions = [
-      applicationActionCreators.account.operation.createInsertAction(operation0.id, operation0, "OPERATION_ADDED")
-    ];
-    expect(actualActions).toEqual(expectedActions);
-  });
-});
-
-describe("Test of deleteOperation()", () => {
-  it("should return a thunk that calls the API, then dispatches a OPERATION_DELETED action", async () => {
-    // GIVEN
-    const deleteOperationApi = jest.fn().mockResolvedValue("OK");
-    const extraArgument: RecursivePartial<ExtraArgument> = {
-      api: {
-        account: {
-          operation: {
-            deleteOperation: deleteOperationApi
-          }
-        }
-      }
-    };
-    const initialState = mockObject<ApplicationState>({});
-    const store = mockStore(extraArgument, initialState);
-    const id: string = operation0.id;
-
-    // WHEN
-    const thunk: Thunk = deleteOperation(id);
-    await store.dispatch(thunk);
-
-    // THEN
-    expect(deleteOperationApi).toHaveBeenCalled();
-    const actualActions = store.getActions();
-    const expectedActions = [
-      applicationActionCreators.account.operation.createDeleteAction(operation0.id, "OPERATION_DELETED")
     ];
     expect(actualActions).toEqual(expectedActions);
   });

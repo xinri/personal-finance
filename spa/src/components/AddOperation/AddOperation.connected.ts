@@ -1,19 +1,19 @@
-import { AddOperationComponent, DispatchProps } from "./AddOperation";
+import { AddOperationComponent, OwnProps, DispatchProps } from "./AddOperation";
 import { connect } from "react-redux";
 import { ExtendedDispatch } from "../../business/definitions";
-import { Operation } from "../../business/account/operation";
+import { RawOperation } from "../../business/account/operation";
 import { ApplicationState } from "../../business/state";
 import business from "../../business";
 
-function mapDispatchToProps(dispatch: ExtendedDispatch): DispatchProps {
-  const requestAddOperation = (operation: Operation) => {
-    const thunk = business.account.operation.addOperation(operation);
+function mapDispatchToProps(dispatch: ExtendedDispatch, { accountId }: OwnProps): DispatchProps {
+  const addOperation = (operation: RawOperation) => {
+    const thunk = business.addOperation(accountId, operation);
     dispatch(thunk);
   };
-  return { requestAddOperation };
+  return { addOperation };
 }
 
-export const AddOperation = connect<{}, DispatchProps, {}, ApplicationState>(
+export const AddOperation = connect<{}, DispatchProps, OwnProps, ApplicationState>(
   undefined,
   mapDispatchToProps
 )(AddOperationComponent);

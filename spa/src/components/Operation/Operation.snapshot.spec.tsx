@@ -10,7 +10,7 @@ it("renders correctly", () => {
       date: new Date(2019, 4, 24),
       amount: 10
     },
-    requestDeleteOperation: jest.fn()
+    deleteOperation: jest.fn()
   };
   const tree = renderer.create(<OperationComponent {...props} />).toJSON();
   expect(tree).toMatchSnapshot();

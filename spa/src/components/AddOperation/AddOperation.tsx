@@ -1,12 +1,14 @@
 import React from "react";
-import { Operation } from "../../business/account/operation/model";
+import { RawOperation } from "../../business/account/operation/model";
 import uuid from "uuid/v4";
 import "./AddOperation.scss";
 
-export interface OwnProps {}
+export interface OwnProps {
+  accountId: string;
+}
 
 export interface DispatchProps {
-  requestAddOperation(operation: Operation): void;
+  addOperation(operation: RawOperation): void;
 }
 
 type Props = OwnProps & DispatchProps;
@@ -53,12 +55,12 @@ export class AddOperationComponent extends React.Component<Props, State> {
   private onButtonClick = (): void => {
     const amount: number | undefined = this.state.value;
     if (amount !== undefined && amount !== 0) {
-      const operation: Operation = {
+      const operation: RawOperation = {
         id: uuid(),
         date: new Date(),
         amount
       };
-      this.props.requestAddOperation(operation);
+      this.props.addOperation(operation);
       this.setValue(undefined);
     }
   };

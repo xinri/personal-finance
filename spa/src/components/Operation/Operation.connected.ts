@@ -6,16 +6,16 @@ import { Operation as IOperation } from "../../business/account/operation";
 import business from "../../business";
 
 function mapStateToProps(state: ApplicationState, { id }: OwnProps): StateProps {
-  const operation: IOperation = business.account.operation.getOperation(state, id);
+  const operation: IOperation = business.getOperation(state, id);
   return { operation };
 }
 
 function mapDispatchToProps(dispatch: ExtendedDispatch, { id }: OwnProps): DispatchProps {
-  const requestDeleteOperation = () => {
-    const thunk = business.account.operation.deleteOperation(id);
+  const deleteOperation = () => {
+    const thunk = business.deleteOperation(id);
     dispatch(thunk);
   };
-  return { requestDeleteOperation };
+  return { deleteOperation };
 }
 
 export const Operation = connect<StateProps, DispatchProps, OwnProps, ApplicationState>(

@@ -5,9 +5,10 @@ import { entryPoints } from "./entryPoints";
 import { Application, enhancer, Count } from "./pageModel";
 import { makeGetStore } from "../store";
 import { ApplicationApi } from "../business/api";
+import { mockObject } from "../util/mockObject";
 
-it("Should allow to display operations", done => {
-  const applicationApi = {} as ApplicationApi;
+it("Balance should equal 0 when there is no operation", done => {
+  const applicationApi = mockObject<ApplicationApi>({});
 
   const t = getTester<ApplicationState, typeof entryPoints, Dispatch, Application>({
     getStore: makeGetStore(applicationApi),
@@ -15,21 +16,16 @@ it("Should allow to display operations", done => {
     enhancer
   });
 
-  t.given(({ enter }) => enter("AN_ACCOUNT_WITH_3_OPERATIONS_FROM_FIXTURES"))
+  t.given(({ enter }) => enter("AN_APPLICATION_WITH_A_SINGLE_ACCOUNT_AND_NO_OPERATION"))
     .when(noop)
-    .then(({ application }) => application.expectNumberOfOperationsToEqual(3))
-    .and(({ application }) => application.expectBalanceToEqual(55))
+    .then(({ application }) => application.onAccount(Count.first).expectBalanceToEqual(0))
     .finally(done);
 });
 
-it("Should allow to add an operation", done => {
-  const applicationApi: ApplicationApi = ({
-    account: {
-      operation: {
-        addOperation: jest.fn().mockResolvedValue("OK")
-      }
-    }
-  } as unknown) as ApplicationApi;
+it("Should allow to add operations and update balance accordingly", done => {
+  const applicationApi = mockObject<ApplicationApi>({
+    addOperation: jest.fn().mockResolvedValue("OK")
+  });
 
   const t = getTester<ApplicationState, typeof entryPoints, Dispatch, Application>({
     getStore: makeGetStore(applicationApi),
@@ -37,21 +33,22 @@ it("Should allow to add an operation", done => {
     enhancer
   });
 
-  t.given(({ enter }) => enter("AN_ACCOUNT_WITH_3_OPERATIONS_FROM_FIXTURES"))
-    .when(({ application }) => application.addOperation({ id: "id", date: new Date(), amount: 10 }))
-    .then(({ application }) => application.expectNumberOfOperationsToEqual(4))
-    .and(({ application }) => application.expectBalanceToEqual(65))
+  t.given(({ enter }) => enter("AN_APPLICATION_WITH_A_SINGLE_ACCOUNT_AND_NO_OPERATION"))
+    .when(async ({ application }) => {
+      await application.onAccount(Count.first).addOperation({ id: "0", date: new Date(), amount: 100 });
+      await application.onAccount(Count.first).addOperation({ id: "1", date: new Date(), amount: 50 });
+      await application.onAccount(Count.first).addOperation({ id: "2", date: new Date(), amount: -30 });
+    })
+    .then(({ application }) => application.onAccount(Count.first).expectNumberOfOperationsToEqual(3))
+    .and(({ application }) => application.onAccount(Count.first).expectBalanceToEqual(120))
     .finally(done);
 });
 
-it("Should allow to remove an operation", done => {
-  const applicationApi = ({
-    account: {
-      operation: {
-        deleteOperation: jest.fn().mockResolvedValue("OK")
-      }
-    }
-  } as unknown) as ApplicationApi;
+it("Should allow to delete operations and update balance accordingly", done => {
+  const applicationApi = mockObject<ApplicationApi>({
+    addOperation: jest.fn().mockResolvedValue("OK"),
+    deleteOperation: jest.fn().mockResolvedValue("OK")
+  });
 
   const t = getTester<ApplicationState, typeof entryPoints, Dispatch, Application>({
     getStore: makeGetStore(applicationApi),
@@ -59,9 +56,14 @@ it("Should allow to remove an operation", done => {
     enhancer
   });
 
-  t.given(({ enter }) => enter("AN_ACCOUNT_WITH_3_OPERATIONS_FROM_FIXTURES"))
-    .when(({ application }) => application.deleteOperation(Count.first))
-    .then(({ application }) => application.expectNumberOfOperationsToEqual(2))
-    .and(({ application }) => application.expectBalanceToEqual(-45))
+  t.given(({ enter }) => enter("AN_APPLICATION_WITH_A_SINGLE_ACCOUNT_AND_NO_OPERATION"))
+    .and(async ({ application }) => {
+      await application.onAccount(Count.first).addOperation({ id: "0", date: new Date(), amount: 100 });
+      await application.onAccount(Count.first).addOperation({ id: "1", date: new Date(), amount: 50 });
+      await application.onAccount(Count.first).addOperation({ id: "2", date: new Date(), amount: -30 });
+    })
+    .when(async ({ application }) => await application.onAccount(Count.first).deleteOperation("0"))
+    .then(({ application }) => application.onAccount(Count.first).expectNumberOfOperationsToEqual(2))
+    .and(({ application }) => application.onAccount(Count.first).expectBalanceToEqual(20))
     .finally(done);
 });

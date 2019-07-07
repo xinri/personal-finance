@@ -1,5 +1,7 @@
 import { accountPublicApi } from "./account";
 
 export const publicApi = {
-  account: accountPublicApi
+  ...accountPublicApi
 };
+
+export type PublicApi = typeof publicApi;

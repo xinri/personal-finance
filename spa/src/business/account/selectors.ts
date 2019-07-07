@@ -1,11 +1,14 @@
 import { Account } from "./model";
-import { operationSelectors } from "./operation";
+import { operationSelectors, Operation } from "./operation";
 import { ApplicationState } from "../state";
+import { getOperation } from "./operation/selectors";
 
 export const accountSelectors = {
   getAllAccounts,
   getAccount,
-  operation: operationSelectors
+  getAccountOperations,
+  computeBalance,
+  ...operationSelectors
 };
 
 export function getAllAccounts({ account: state }: ApplicationState): Account[] {
@@ -18,4 +21,23 @@ export function getAccount({ account: state }: ApplicationState, id: string): Ac
     throw new Error(`No account matches the following id: ${id}`);
   }
   return account;
+}
+
+export function getAccountOperations(state: ApplicationState, accountId: string): Operation[] {
+  const { operationIds }: Account = getAccount(state, accountId);
+  return operationIds.map((operationId: string) => getOperation(state, operationId));
+}
+
+export function computeBalance(state: ApplicationState, accountId: string): number {
+  return getAccountOperations(state, accountId)
+    .map(extractAmount)
+    .reduce(sum, 0);
+}
+
+function extractAmount({ amount }: Operation): number {
+  return amount;
+}
+
+function sum(accumulated: number, current: number): number {
+  return accumulated + current;
 }

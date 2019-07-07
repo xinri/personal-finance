@@ -14,20 +14,20 @@ export interface StateProps {
 }
 
 export interface DispatchProps {
-  requestDeleteOperation(): void;
+  deleteOperation(): void;
 }
 
 export type Props = OwnProps & StateProps & DispatchProps;
 
 export const OperationComponent: React.StatelessComponent<Props> = ({
   operation: { date, amount },
-  requestDeleteOperation
+  deleteOperation
 }) => (
   <div className="operation" data-e2e="account-operation">
     <LabeledDebitOrCredit amount={amount} renderLabel={() => <FinanceDate date={date} />} />
     <div className="actions-container">
       <div className="actions-content">
-        <OperationActions onDelete={requestDeleteOperation} />
+        <OperationActions onDelete={deleteOperation} />
       </div>
     </div>
   </div>

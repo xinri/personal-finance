@@ -3,14 +3,16 @@ import { OperationHistory } from "../OperationHistory";
 import { Balance } from "../Balance";
 import { AddOperation } from "../AddOperation";
 
-export interface Props {}
+export interface Props {
+  accountId: string;
+}
 
-export const Account: React.StatelessComponent<Props> = () => {
+export const Account: React.StatelessComponent<Props> = ({ accountId }: Props) => {
   return (
     <div>
-      <AddOperation />
-      <OperationHistory />
-      <Balance />
+      <AddOperation accountId={accountId} />
+      <OperationHistory accountId={accountId} />
+      <Balance accountId={accountId} />
     </div>
   );
 };

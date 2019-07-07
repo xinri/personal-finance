@@ -1,7 +1,7 @@
 import { accountApi } from "./account/api";
 
 export const applicationApi = {
-  account: accountApi
+  ...accountApi
 };
 
 export type ApplicationApi = typeof applicationApi;

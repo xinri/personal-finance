@@ -2,7 +2,9 @@ import React from "react";
 import { LabeledDebitOrCredit } from "../LabeledDebitOrCredit";
 import "./Balance.scss";
 
-export interface OwnProps {}
+export interface OwnProps {
+  accountId: string;
+}
 
 export interface StateProps {
   amount: number;

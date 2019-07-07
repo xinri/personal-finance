@@ -1,18 +1,24 @@
-export interface Operation {
+import { Omit } from "../../../util/omit";
+
+export interface RawOperation {
   id: string;
   date: Date;
   amount: number;
 }
 
-export type SerializedOperation = Omit<Operation, "date"> & {
+export type SerializedRawOperation = Omit<RawOperation, "date"> & {
   date: string;
 };
 
-export function deserializeOperations(operations: SerializedOperation[]): Operation[] {
-  return operations.map(deserializeSingleOperation);
+export type Operation = RawOperation & {
+  accountId: string;
+};
+
+export function deserializeRawOperations(operations: SerializedRawOperation[]): RawOperation[] {
+  return operations.map(deserializeSingleRawOperation);
 }
 
-export function deserializeSingleOperation(operation: SerializedOperation): Operation {
+export function deserializeSingleRawOperation(operation: SerializedRawOperation): RawOperation {
   return {
     ...operation,
     date: new Date(operation.date)

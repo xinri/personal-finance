@@ -1,15 +1,12 @@
 import { Sequence } from "redux-integration-testing";
-import { operationFixtures } from "../business/account/operation/fixtures";
-import business from "../business";
+import { accountActionCreators, accountFixtures } from "../business/account";
 
-const { operation0, operation1, operation2 } = operationFixtures;
+const { account0 } = accountFixtures;
 
-const AN_ACCOUNT_WITH_3_OPERATIONS_FROM_FIXTURES: Sequence = [
-  business.account.operation.createInsertAction(operation0.id, operation0),
-  business.account.operation.createInsertAction(operation1.id, operation1),
-  business.account.operation.createInsertAction(operation2.id, operation2)
+const AN_APPLICATION_WITH_A_SINGLE_ACCOUNT_AND_NO_OPERATION: Sequence = [
+  accountActionCreators.createInsertAction(account0.id, account0)
 ];
 
 export const entryPoints = {
-  AN_ACCOUNT_WITH_3_OPERATIONS_FROM_FIXTURES
+  AN_APPLICATION_WITH_A_SINGLE_ACCOUNT_AND_NO_OPERATION
 };

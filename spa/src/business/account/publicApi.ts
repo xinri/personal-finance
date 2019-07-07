@@ -1,8 +1,14 @@
-import { getAllAccounts, getAccount } from "./selectors";
+import { fetchAccounts, addOperation, deleteOperation } from "./thunks";
+import { getAllAccounts, getAccount, getAccountOperations, computeBalance } from "./selectors";
 import { operationPublicApi } from "./operation";
 
 export const accountPublicApi = {
+  fetchAccounts,
   getAllAccounts,
   getAccount,
-  operation: operationPublicApi
+  getAccountOperations,
+  computeBalance,
+  addOperation,
+  deleteOperation,
+  ...operationPublicApi
 };

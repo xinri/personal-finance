@@ -6,11 +6,13 @@ import { enableBatching } from "redux-batched-actions";
 import { ExtraArgument } from "./business/definitions";
 import { ApplicationApi } from "./business/api";
 import { applicationThunksCreators } from "./business/thunks";
+import { applicationSelectors } from "./business/selectors";
 
 export function makeGetStore(api: ApplicationApi) {
   return function getStore(...additionalMiddlewares: Middleware[]): Store {
     const extraArgument: ExtraArgument = {
       thunkCreators: applicationThunksCreators,
+      selectors: applicationSelectors,
       api
     };
     const thunkMiddleware: Middleware = thunk.withExtraArgument(extraArgument);

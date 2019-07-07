@@ -1,27 +1,24 @@
 import { Operation } from "./model";
 
 const operation0: Operation = {
-  id: "6a9542d0-a0f7-4c75-a476-8949ad425fde",
+  id: "1e61de81-9351-4c44-8631-734d061ee2c0",
+  accountId: "accountId",
   date: new Date(2019, 5, 12),
   amount: 100
 };
 
 const operation1: Operation = {
-  id: "8197554e-0819-47b6-a06a-9f6abfc5f2ad",
+  id: "f85cce23-f62c-4370-a375-03d3a214e1be",
+  accountId: "accountId",
   date: new Date(2019, 5, 13),
   amount: -40
 };
 
 const operation2: Operation = {
-  id: "bc4a3c17-891f-406c-9757-9ddba98d3efb",
+  id: "bdef40f1-e5fe-4050-aee8-f2254c9d6dc9",
+  accountId: "accountId",
   date: new Date(2019, 10, 21),
   amount: -5
-};
-
-const anotherOperation: Operation = {
-  id: "2515c7f1-102e-46ec-9c65-4b7193017c4b",
-  date: new Date(2019, 10, 22),
-  amount: 10
 };
 
 const operations: Operation[] = [operation0, operation1, operation2];
@@ -30,6 +27,5 @@ export const operationFixtures = {
   operation0,
   operation1,
   operation2,
-  operations,
-  anotherOperation
+  operations
 };
