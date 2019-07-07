@@ -89,12 +89,12 @@ describe("Test of operationsFetched()", () => {
 describe("Test of addOperation()", () => {
   it("should return a thunk that calls the API, then dispatches an OPERATION_ADDED action", async () => {
     // GIVEN
-    const addOperation = jest.fn().mockResolvedValue("OK");
+    const addOperationApi = jest.fn().mockResolvedValue("OK");
     const extraArgument: RecursivePartial<ExtraArgument> = {
       api: {
         account: {
           operation: {
-            addOperation
+            addOperation: addOperationApi
           }
         }
       }
@@ -108,7 +108,7 @@ describe("Test of addOperation()", () => {
     await store.dispatch(thunk);
 
     // THEN
-    expect(addOperation).toHaveBeenCalled();
+    expect(addOperationApi).toHaveBeenCalled();
     const actualActions = store.getActions();
     const expectedActions = [
       applicationActionCreators.account.operation.createInsertAction(operation0.id, operation0, "OPERATION_ADDED")
@@ -120,12 +120,12 @@ describe("Test of addOperation()", () => {
 describe("Test of deleteOperation()", () => {
   it("should return a thunk that calls the API, then dispatches a OPERATION_DELETED action", async () => {
     // GIVEN
-    const deleteOperation = jest.fn().mockResolvedValue("OK");
+    const deleteOperationApi = jest.fn().mockResolvedValue("OK");
     const extraArgument: RecursivePartial<ExtraArgument> = {
       api: {
         account: {
           operation: {
-            deleteOperation
+            deleteOperation: deleteOperationApi
           }
         }
       }
@@ -139,7 +139,7 @@ describe("Test of deleteOperation()", () => {
     await store.dispatch(thunk);
 
     // THEN
-    expect(deleteOperation).toHaveBeenCalled();
+    expect(deleteOperationApi).toHaveBeenCalled();
     const actualActions = store.getActions();
     const expectedActions = [
       applicationActionCreators.account.operation.createDeleteAction(operation0.id, "OPERATION_DELETED")

@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { ExtendedDispatch } from "../../business/definitions";
 import { Operation } from "../../business/account/operation";
 import { ApplicationState } from "../../business/state";
-import { applicationThunksCreators } from "../../business/thunks";
+import business from "../../business";
 
 function mapDispatchToProps(dispatch: ExtendedDispatch): DispatchProps {
   const requestAddOperation = (operation: Operation) => {
-    const thunk = applicationThunksCreators.account.operation.addOperation(operation);
+    const thunk = business.account.operation.addOperation(operation);
     dispatch(thunk);
   };
   return { requestAddOperation };

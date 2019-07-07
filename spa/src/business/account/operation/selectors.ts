@@ -7,11 +7,11 @@ export const operationSelectors = {
   computeBalance
 };
 
-function getAllOperations(state: OperationState): Operation[] {
+export function getAllOperations(state: OperationState): Operation[] {
   return Object.keys(state).map((key: string) => state[key]);
 }
 
-function getOperation(state: OperationState, id: string): Operation {
+export function getOperation(state: OperationState, id: string): Operation {
   const operation: Operation | undefined = state[id];
   if (operation === undefined) {
     throw new Error(`No operation matches the following id: ${id}`);
@@ -19,7 +19,7 @@ function getOperation(state: OperationState, id: string): Operation {
   return operation;
 }
 
-function computeBalance(state: OperationState): number {
+export function computeBalance(state: OperationState): number {
   return getAllOperations(state)
     .map(extractAmount)
     .reduce(sum, 0);
