@@ -1,11 +1,11 @@
 import { ApplicationComponent, OwnProps, StateProps } from "./Application";
 import { connect } from "react-redux";
 import { ApplicationState } from "../../business/state";
-import business from "../../business";
+import { getAllAccounts } from "../../business/account/selectors";
 
 function mapStateToProps(state: ApplicationState): StateProps {
   return {
-    accounts: business.getAllAccounts(state)
+    accounts: getAllAccounts(state)
   };
 }
 

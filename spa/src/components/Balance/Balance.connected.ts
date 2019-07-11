@@ -1,10 +1,10 @@
 import { BalanceComponent, OwnProps, StateProps } from "./Balance";
 import { connect } from "react-redux";
 import { ApplicationState } from "../../business/state";
-import business from "../../business";
+import { computeBalance } from "../../business/account/selectors";
 
 function mapStateToProps(state: ApplicationState, { accountId }: OwnProps): StateProps {
-  const balance: number = business.computeBalance(state, accountId);
+  const balance: number = computeBalance(state, accountId);
   return { amount: balance };
 }
 

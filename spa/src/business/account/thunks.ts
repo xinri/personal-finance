@@ -6,6 +6,7 @@ import { operationThunksCreators } from "./operation/thunks";
 import { RawOperation, Operation } from "./operation";
 import { applicationActionCreators } from "../actions";
 import flatMap from "lodash.flatmap";
+import { accountApi } from "./api";
 
 export type AccountApi = GetAccountsApi & AddOperationApi & DeleteOperationApi;
 
@@ -13,6 +14,7 @@ export const accountThunksCreators = {
   fetchAccounts,
   accountsFetched,
   addOperation,
+  deleteOperation,
   ...operationThunksCreators
 };
 
@@ -24,9 +26,9 @@ export function fetchAccounts(): Thunk {
   return async (
     dispatch: ExtendedDispatch,
     _: () => ApplicationState,
-    { thunkCreators: { accountsFetched, operationsFetched }, api: { getAccounts } }
+    { thunkCreators: { accountsFetched, operationsFetched } }
   ) => {
-    const accountsWithOperations: AccountWithRawOperations[] = await getAccounts();
+    const accountsWithOperations: AccountWithRawOperations[] = await accountApi.getAccounts();
 
     const allAccountsOperations: Operation[] = flatMap(
       accountsWithOperations,
@@ -68,12 +70,8 @@ interface AddOperationApi {
 }
 
 export function addOperation(accountId: string, operation: RawOperation): Thunk {
-  return async (
-    dispatch: ExtendedDispatch,
-    getState: () => ApplicationState,
-    { selectors: { getAccount }, api: { addOperation } }
-  ) => {
-    await addOperation(accountId, operation);
+  return async (dispatch: ExtendedDispatch, getState: () => ApplicationState, { selectors: { getAccount } }) => {
+    await accountApi.addOperation(accountId, operation);
 
     const state: ApplicationState = getState();
     const account: Account = getAccount(state, accountId);
@@ -105,9 +103,9 @@ export function deleteOperation(operationId: string): Thunk {
   return async (
     dispatch: ExtendedDispatch,
     getState: () => ApplicationState,
-    { selectors: { getOperation, getAccount }, api: { deleteOperation } }
+    { selectors: { getOperation, getAccount } }
   ) => {
-    await deleteOperation(operationId);
+    await accountApi.deleteOperation(operationId);
 
     const state: ApplicationState = getState();
     const { accountId } = getOperation(state, operationId);

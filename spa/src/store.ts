@@ -4,16 +4,14 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { rootReducer } from "./business/reducer";
 import { enableBatching } from "redux-batched-actions";
 import { ExtraArgument } from "./business/definitions";
-import { ApplicationApi } from "./business/api";
 import { applicationThunksCreators } from "./business/thunks";
 import { applicationSelectors } from "./business/selectors";
 
-export function makeGetStore(api: ApplicationApi) {
+export function makeGetStore() {
   return function getStore(...additionalMiddlewares: Middleware[]): Store {
     const extraArgument: ExtraArgument = {
       thunkCreators: applicationThunksCreators,
-      selectors: applicationSelectors,
-      api
+      selectors: applicationSelectors
     };
     const thunkMiddleware: Middleware = thunk.withExtraArgument(extraArgument);
     const middlewares: Middleware[] = [thunkMiddleware, ...additionalMiddlewares];

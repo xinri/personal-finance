@@ -3,10 +3,8 @@ import { ExtendedDispatch } from "../business/definitions";
 import { ApplicationState } from "../business/state";
 import { RawOperation, Operation } from "../business/account/operation";
 import { accountFixtures } from "../business/account";
-import { operationFixtures } from "../business/account/operation/fixtures";
-import business from "../business";
-
-const { operation0, operation1, operation2 } = operationFixtures;
+import { accountThunksCreators } from "../business/account/thunks";
+import { accountSelectors } from "../business/account/selectors";
 
 export enum Count {
   first = 0,
@@ -33,19 +31,19 @@ export const enhancer: Enhancer<ExtendedDispatch, ApplicationState, Application>
     const accountId = accountFixtures.accounts[count].id;
 
     async function addOperation(operation: Operation): Promise<void> {
-      await dispatch(business.addOperation(accountId, operation));
+      await dispatch(accountThunksCreators.addOperation(accountId, operation));
     }
 
     async function deleteOperation(operationId: string): Promise<void> {
-      await dispatch(business.deleteOperation(operationId));
+      await dispatch(accountThunksCreators.deleteOperation(operationId));
     }
 
     function expectNumberOfOperationsToEqual(n: number): void {
-      expect(business.getAccountOperations(state, accountId).length).toEqual(n);
+      expect(accountSelectors.getAccountOperations(state, accountId).length).toEqual(n);
     }
 
     function expectBalanceToEqual(value: number): void {
-      expect(business.computeBalance(state, accountId)).toEqual(value);
+      expect(accountSelectors.computeBalance(state, accountId)).toEqual(value);
     }
 
     return {

@@ -4,14 +4,10 @@ import { ApplicationState } from "../business/state";
 import { entryPoints } from "./entryPoints";
 import { Application, enhancer, Count } from "./pageModel";
 import { makeGetStore } from "../store";
-import { ApplicationApi } from "../business/api";
-import { mockObject } from "../util/mockObject";
 
 it("Balance should equal 0 when there is no operation", done => {
-  const applicationApi = mockObject<ApplicationApi>({});
-
   const t = getTester<ApplicationState, typeof entryPoints, Dispatch, Application>({
-    getStore: makeGetStore(applicationApi),
+    getStore: makeGetStore(),
     entryPoints,
     enhancer
   });
@@ -23,12 +19,8 @@ it("Balance should equal 0 when there is no operation", done => {
 });
 
 it("Should allow to add operations and update balance accordingly", done => {
-  const applicationApi = mockObject<ApplicationApi>({
-    addOperation: jest.fn().mockResolvedValue("OK")
-  });
-
   const t = getTester<ApplicationState, typeof entryPoints, Dispatch, Application>({
-    getStore: makeGetStore(applicationApi),
+    getStore: makeGetStore(),
     entryPoints,
     enhancer
   });
@@ -45,13 +37,8 @@ it("Should allow to add operations and update balance accordingly", done => {
 });
 
 it("Should allow to delete operations and update balance accordingly", done => {
-  const applicationApi = mockObject<ApplicationApi>({
-    addOperation: jest.fn().mockResolvedValue("OK"),
-    deleteOperation: jest.fn().mockResolvedValue("OK")
-  });
-
   const t = getTester<ApplicationState, typeof entryPoints, Dispatch, Application>({
-    getStore: makeGetStore(applicationApi),
+    getStore: makeGetStore(),
     entryPoints,
     enhancer
   });
